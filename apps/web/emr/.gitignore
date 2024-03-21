@@ -97,3 +97,6 @@ lib-cov
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
+
+# Next.js build output
+.next/
