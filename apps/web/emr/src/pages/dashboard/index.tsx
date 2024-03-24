@@ -7,10 +7,6 @@ export default function Dashboard() {
     return (
         	<Layout>
                 <h1>Dashboard</h1>
-                <Button>Click me</Button>
-                <Link href="/">
-                    <p>Go to Home Page</p>
-                </Link>
             </Layout>
     );
 }

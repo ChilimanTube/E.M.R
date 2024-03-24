@@ -19,15 +19,15 @@ import {
 import classes from './Navbar.module.css';
 
 const data = [
-  { link: '', label: 'Dashboard', icon: IconCategory },
+  { link: '/dashboard', label: 'Dashboard', icon: IconCategory },
   { link: '', label: 'Dispatch', icon: IconHeartRateMonitor },
   { link: '', label: 'Teams', icon: IconUsers },
   { link: '', label: 'Emergencies', icon: IconHeartbeat },
-  { link: '', label: 'Statistics', icon: IconChartPie },
+  { link: '/dashboard/statistics', label: 'Statistics', icon: IconChartPie },
   { link: '', label: 'Chat', icon: IconMessageCircle },
   { link: '', label: 'Map', icon: IconMap },
   { link: '', label: 'Guides', icon: IconBook },
-  { link: '', label: 'SOP', icon: IconFileDescription },
+  { link: 'https://www.medrunner.space/emergency-response-guide', label: 'SOP', icon: IconFileDescription},
   { link: '', label: 'Medals', icon: IconBadges },
   { link: '', label: 'Settings', icon: IconSettings },
 ];
@@ -36,19 +36,20 @@ export function Navbar() {
   const [active, setActive] = useState('Billing');
 
   const links = data.map((item) => (
-    <a
+    <Link
       className={classes.link}
       data-active={item.label === active || undefined}
       href={item.link}
       key={item.label}
       onClick={(event) => {
-        event.preventDefault();
         setActive(item.label);
       }}
+      target={/^https:\/\//.test(item.link) ? '_blank' : undefined}
+      rel={/^https:\/\//.test(item.link) ? 'noopener noreferrer' : undefined}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Link>
   ));
 
   return (

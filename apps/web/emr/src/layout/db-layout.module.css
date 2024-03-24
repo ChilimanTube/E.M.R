@@ -2,6 +2,7 @@
     display: flex;
     min-height: 100vh; /* Ensure layout fills viewport height */
     flex-direction: column;
+    background-color: #232836;
   }
   
   .navbar {
