@@ -61,12 +61,12 @@ import {
     );
   }
 
-export default function Dashboard() {
+export default function Statistics() {
     return (
         	<Layout>
-                <h1>Dashboard</h1>
-                <h2>Statistics</h2>
-                <StatsGrid />
-            </Layout>
+            <h1>Dashboard</h1>
+            <h2>Statistics</h2>
+            <StatsGrid />
+          </Layout>
     );
 }
