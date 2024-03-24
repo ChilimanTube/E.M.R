@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const logo = "/mrs_logo.webp";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
           <p>
             Made for Medrunner
           </p>
+          <a href="https://medrunner.space"><Image src={logo} alt="Medrunner Logo" width={100} height={100}/></a>
           <div>
             <a
               href="https://github.com/ChilimanTube"
@@ -28,12 +30,15 @@ export default function Home() {
             >
               By{" "}
               Vojtěch Král
+              <br />
+              aka ChilimanTube
             </a>
           </div>
         </div>
 
         <div className={styles.center}>
-          <h2>Welcome to <h1>Emergency Management & Response </h1></h2>
+          <h2>Welcome to{" "}</h2>
+          <h1>Emergency Management & Response </h1>
         </div>
 
         <div className={styles.grid}>
@@ -49,48 +54,19 @@ export default function Home() {
             </p>
           </Link>
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          <Link
+            href="https://medrunner.space"
             className={styles.card}
             target="_blank"
             rel="noopener noreferrer"
           >
             <h2>
-              Learn <span>-&gt;</span>
+              Medrunner <span>-&gt;</span>
             </h2>
             <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
+              Learn about Medrunner!
             </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
+          </Link>
         </div>
       </main>
     </>

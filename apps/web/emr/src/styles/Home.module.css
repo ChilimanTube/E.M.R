@@ -39,8 +39,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
-  max-width: 100%;
+  grid-template-columns: repeat(2, minmax(25%, auto));
+  max-width: 35%;
   width: var(--max-width);
 }
 
@@ -60,6 +60,7 @@
 .card h2 {
   font-weight: 600;
   margin-bottom: 0.7rem;
+  text-align: center;
 }
 
 .card p {
@@ -68,10 +69,11 @@
   font-size: 0.9rem;
   line-height: 1.5;
   max-width: 30ch;
+  text-align: center;
 }
 
 .center {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   position: relative;
