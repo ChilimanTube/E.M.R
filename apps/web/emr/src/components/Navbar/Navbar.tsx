@@ -27,7 +27,7 @@ const data = [
   { link: '', label: 'Chat', icon: IconMessageCircle },
   { link: '', label: 'Map', icon: IconMap },
   { link: '', label: 'Guides', icon: IconBook },
-  { link: 'https://www.medrunner.space/emergency-response-guide', label: 'SOP', icon: IconFileDescription},
+  { link: 'https://www.medrunner.space/emergency-response-guide', label: 'ERG', icon: IconFileDescription},
   { link: '', label: 'Medals', icon: IconBadges },
   { link: '', label: 'Settings', icon: IconSettings },
 ];

@@ -1,13 +1,11 @@
 .layout {
     display: flex;
-    min-height: 100vh; /* Ensure layout fills viewport height */
+    min-height: 100vh;
     flex-direction: column;
     background-color: #232836;
   }
   
   .navbar {
-    /* Style your navbar here, including height and positioning */
-    /* Example: */
     height: 60px;
     background-color: #f0f0f0;
     display: flex;
@@ -17,7 +15,9 @@
   }
   
   .content {
-    flex: 1; /* Occupy remaining space after navbar */
-    transform: translateX(300px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    padding-left: rem(300px);
   }
-  
