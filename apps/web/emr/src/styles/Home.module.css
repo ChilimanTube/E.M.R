@@ -6,6 +6,7 @@
   padding: 6rem;
   min-height: 100vh;
   background-color: #232836;
+  background: linear-gradient(0deg,#641414, #232836);
 }
 
 .description {
