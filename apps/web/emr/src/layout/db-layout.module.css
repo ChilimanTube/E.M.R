@@ -2,7 +2,7 @@
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    background-color: #232836;
+    background: linear-gradient(45deg, #232836, #a1b8e0);
   }
   
   .navbar {
