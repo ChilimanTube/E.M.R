@@ -1,0 +1,17 @@
+.mainContainer {
+    padding-inline: 30px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    background-color: rgba(44, 49, 60, 0.5);
+    margin-top: 25px;
+}
+
+.cardSpace {
+    display: inline-block;
+    flex: 1;
+    margin: 10px;
+}
