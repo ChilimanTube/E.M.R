@@ -15,13 +15,14 @@ import {
   IconHeartbeat,
   IconMessageCircle,
   IconUsers,
+  IconUser,
 } from '@tabler/icons-react';
 import classes from './Navbar.module.css';
 
 const data = [
   { link: '/dashboard', label: 'Dashboard', icon: IconCategory },
-  { link: '', label: 'Dispatch', icon: IconHeartRateMonitor },
-  { link: '', label: 'Teams', icon: IconUsers },
+  { link: '/dashboard/dispatch', label: 'Dispatch', icon: IconHeartRateMonitor },
+  { link: '/dashboard/teams', label: 'Teams', icon: IconUsers },
   { link: '', label: 'Emergencies', icon: IconHeartbeat },
   { link: '/dashboard/statistics', label: 'Statistics', icon: IconChartPie },
   { link: '', label: 'Chat', icon: IconMessageCircle },
@@ -63,6 +64,10 @@ export function Navbar() {
       </div>
 
       <div className={classes.footer}>
+        <Link href="/" className={classes.link} onClick={(event) => event.preventDefault()}>
+          <IconUser className={classes.linkIcon} stroke={1.5} />
+          <span>Username</span>
+        </Link>
         <Link href="/" className={classes.link} onClick={(event) => event.preventDefault()}>
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Change account</span>
