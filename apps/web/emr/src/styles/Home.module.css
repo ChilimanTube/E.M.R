@@ -228,3 +228,95 @@
     transform: rotate(0deg);
   }
 }
+
+.rightLight::before,
+.leftLight::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rightLight::before {
+  animation: rightl 1s linear infinite;
+  animation-delay: 0.5s;
+  margin-right: 20px;
+  background-color: transparent;
+}
+
+.leftLight::before {
+  animation: leftl 1s linear infinite;
+  animation-delay: 1s;
+  background-color: transparent;
+}
+.rightLight{
+  animation: rightl 1s linear infinite;
+  animation-delay: 0.5s;
+  margin-right: 20px;
+  color: transparent;
+}
+
+.leftLight{
+  animation: leftl 1s linear infinite;
+  animation-delay: 1s;
+  color: transparent;
+}
+
+.lightsContainer{
+  display: flex;
+  width: 578px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@keyframes leftl {
+  from {
+    box-shadow: 0 0 10px white,
+                0 0 20px white,
+                0 0 40px white,
+                0 0 80px white,
+                0 0 120px white;
+    background-color: white;
+  }
+  to{
+    box-shadow: none;
+    background-color: transparent;
+  }
+}
+
+@keyframes rightl {
+  from {
+    box-shadow: 0 0 10px red,
+                0 0 20px red,
+                0 0 40px red,
+                0 0 80px red,
+                0 0 120px red;
+    background-color: red;
+  }
+  to{
+    box-shadow: none;
+    background-color: transparent;
+  }
+}
+
+.emergencyLights{
+  display: flex;
+  width: 100%;
+  height: 3px;
+  filter: blur(3px);
+  border-radius: 20px;
+  background-color: transparent;
+}
+
+.rightLight,
+.leftLight {
+  flex: 1;
+}
+
+@media screen and (max-width: 773px) {
+  .lightsContainer {
+    width: 420px;
+    margin-top: 5px;
+  }
+  
+}
