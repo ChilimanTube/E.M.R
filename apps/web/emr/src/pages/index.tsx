@@ -19,9 +19,15 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.description}>
           <p>
-            Made for Medrunner
+            <a href="https://medrunner.space" target="_blank"
+              rel="noopener noreferrer">
+              Made for Medrunner
+            </a>
           </p>
-          <a href="https://medrunner.space"><Image src={logo} alt="Medrunner Logo" width={100} height={100}/></a>
+          <a href="https://medrunner.space" target="_blank"
+              rel="noopener noreferrer">
+            <Image src={logo} alt="Medrunner Logo" width={100} height={100}/>
+          </a>
           <div>
             <a
               href="https://github.com/ChilimanTube"
@@ -39,6 +45,12 @@ export default function Home() {
         <div className={styles.center}>
           <h2>Welcome to{" "}</h2>
           <h1>Emergency Management & Response </h1>
+          <div className={styles.lightsContainer}>
+            <div className={styles.emergencyLights}>
+              <span className={styles.rightLight}></span>
+              <span className={styles.leftLight}></span>
+            </div>
+          </div>
         </div>
 
         <div className={styles.grid}>
