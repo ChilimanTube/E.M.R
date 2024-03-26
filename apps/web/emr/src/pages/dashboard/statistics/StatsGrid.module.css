@@ -1,6 +1,6 @@
 .root {
     padding: calc(var(--mantine-spacing-lg) * 1.5);
-  }
+}
   
   .value {
     font-size: rem(24px);
@@ -53,7 +53,7 @@
   .areaChart{
     margin-top: 20px;
     background-color: #2c313c;
-    margin-inline: rem(50px);
+    margin-inline: rem(30px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     padding: 5px;
