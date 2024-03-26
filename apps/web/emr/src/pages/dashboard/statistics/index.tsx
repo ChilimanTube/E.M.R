@@ -9,7 +9,7 @@ import {
     IconArrowUpRight,
     IconArrowDownRight,
   } from '@tabler/icons-react';
-  import classes from './StatsGrid.module.css';
+import classes from './StatsGrid.module.css';
 import { DonutChart } from '@mantine/charts';
 import { AreaChart } from '@mantine/charts';
 
