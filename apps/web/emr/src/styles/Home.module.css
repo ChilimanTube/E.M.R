@@ -30,7 +30,7 @@
 .description p {
   position: relative;
   margin: 0;
-  padding: 1rem;
+  padding: 0;
 }
 
 .code {
