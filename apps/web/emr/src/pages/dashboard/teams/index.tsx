@@ -13,6 +13,12 @@ export default function Dispatch(){
                         <ArticleCard />
                         <ArticleCard />
                         <ArticleCard />
+                        <ArticleCard />
+                        <ArticleCard />
+                        <ArticleCard />
+                        <ArticleCard />
+                        <ArticleCard />
+                        <ArticleCard />
                     </div>
                 </div>
             </div>
