@@ -26,7 +26,7 @@ export default function Home() {
           </p>
           <a href="https://medrunner.space" target="_blank"
               rel="noopener noreferrer">
-            <Image src={logo} alt="Medrunner Logo" width={100} height={100}/>
+            <Image src={logo} alt="Medrunner Logo" width={120} height={120}/>
           </a>
           <div>
             <a
