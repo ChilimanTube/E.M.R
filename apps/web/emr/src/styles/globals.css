@@ -40,6 +40,24 @@
   --card-border-rgb: 131, 134, 135;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+  width: 0px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #46506c; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #232836; 
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
