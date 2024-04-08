@@ -1,0 +1,23 @@
+.mainContainer {
+    padding-inline: 30px;
+}
+
+.container {
+    padding: 1rem;
+}
+
+.icon {
+    color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-3));
+  }
+
+.paper {
+    background-color: #2c313c;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-color: transparent;
+}
+
+.value {
+    font-size: rem(28px);
+    font-weight: 700;
+    line-height: 1;
+  }
