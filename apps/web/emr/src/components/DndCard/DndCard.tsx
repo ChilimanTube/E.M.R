@@ -14,9 +14,32 @@ import {
 } from '@mantine/core';
 import classes from './DndCard.module.css';
 
+const data = [
+  {
+    teamName: 'Team Alpha',
+    leader: 'Chiliman',
+    members: ['John Doe', 'Jane Doe', 'Alice Doe'],
+    status: 'Standby',
+  },
+  {
+    teamName: 'Team Bravo',
+    leader: 'Poptic',
+    members: ['John Doe', 'Jane Doe', 'Alice Doe'],
+    status: 'Standby',
+  },
+  {
+    teamName: 'Team Charlie',
+    leader: 'Milo Wilo',
+    members: ['John Doe', 'Jane Doe', 'Alice Doe'],
+    status: 'Standby',
+  },
+];
+
+
 export function ArticleCard() {
   const linkProps = { href: '#' };
   const theme = useMantineTheme();
+
 
   return (
     <Card radius="md" className={classes.card} shadow="0 2px 10px rgba(0, 0, 0, 0.3)">
