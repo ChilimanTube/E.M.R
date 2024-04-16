@@ -54,7 +54,7 @@ export default function Home() {
         </div>
 
         <div className={styles.grid}>
-          <Link href="/dashboard"
+          <Link href="/login"
             className={styles.card}
             rel="noopener noreferrer"
           >

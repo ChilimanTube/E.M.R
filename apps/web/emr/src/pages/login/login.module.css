@@ -1,0 +1,23 @@
+.title {
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+    font-weight: 900;
+  }
+
+  .container {
+    background: linear-gradient(45deg, #232836, #a1b8e0);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .login {
+    background-color: #2c313c;
+  }
+
+  .reminder {
+    color: white;
+  }

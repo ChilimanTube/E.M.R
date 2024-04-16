@@ -65,7 +65,7 @@
     height: rem(25px);
   }
 
-  .disabledLink{
-    opacity: 1;
+  .disabledLink {
+    opacity: 0.5;
     cursor: not-allowed;
   }
