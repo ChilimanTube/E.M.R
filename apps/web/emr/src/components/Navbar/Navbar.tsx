@@ -66,7 +66,7 @@ export function Navbar() {
           <IconUser className={classes.linkIcon} stroke={1.5} />
           <span>Username</span>
         </Link>
-        <Link href="/" className={`${classes.link} ${classes.disabledLink}`} onClick={(event) => event.preventDefault()}>
+        <Link href="/login" className={`${classes.link}`}>
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Change account</span>
         </Link>

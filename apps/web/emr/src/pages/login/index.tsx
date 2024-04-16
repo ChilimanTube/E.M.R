@@ -11,6 +11,7 @@ import {
     Group,
     Button,
 } from '@mantine/core';
+import Link from 'next/link';
 import classes from './login.module.css';
 
 export default function Login() {
@@ -90,9 +91,11 @@ export default function Login() {
                     </Button>
                     <Text c="dimmed" size="sm" ta="center" mt={5}>
                         Do not have an account yet?{' '}
-                        <Anchor size="sm" component="button">
-                            Create account
-                        </Anchor>
+                        <Link href='/register'>
+                            <Anchor size="sm" component="button">
+                                Create account
+                            </Anchor>
+                        </Link>
                     </Text>
                 </Paper>
             </Container>
