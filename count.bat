@@ -10,3 +10,7 @@ FOR /F "tokens=*" %%i IN ('cloc src 2^>^&1') DO (
 )
 
 PAUSE
+
+REM cd ../..
+REM cd C:\Users\Vojtěch\Desktop\Own Projects\E.M.R\E.M.R\apps\web\emr
+REM cloc src
