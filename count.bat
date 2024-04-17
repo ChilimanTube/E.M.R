@@ -8,3 +8,5 @@ FOR /F "tokens=*" %%i IN ('cloc src 2^>^&1') DO (
         ECHO cloc execution successful. Output: %%i
     )
 )
+
+PAUSE
