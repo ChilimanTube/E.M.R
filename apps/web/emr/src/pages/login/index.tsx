@@ -86,7 +86,7 @@ export default function Login() {
                             Forgot password?
                         </Anchor>
                     </Group>
-                    <Button fullWidth mt="xl" onClick={handleSignIn}>
+                    <Button fullWidth mt="xl" onClick={handleSignIn} variant="light" color="blue">
                         Sign in
                     </Button>
                     <Text c="dimmed" size="sm" ta="center" mt={5}>
