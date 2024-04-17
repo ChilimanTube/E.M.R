@@ -10,10 +10,29 @@ import {
     TextInput,
     Text,
     Title,
+    Modal,
 } from "@mantine/core";
 
 import classes from "./register.module.css";
 import Link from "next/link";
+
+function ConfimRegistrationModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+    return (
+        <Modal
+            opened={isOpen}
+            onClose={onClose}
+            title="Registration Successful"
+            transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}
+            centered
+            shadow="xxl"
+        >
+            <Text>
+                Your registration is completed. Please login to access the E.M.R system
+            </Text>
+            <Button onClick={() => window.location.href = '/login'} variant="light" style={{ marginTop: 15}}>Login</Button>
+        </Modal>
+    );
+}
 
 export default function Register() {
     const [firstName, setFirstName] = useState("");
@@ -24,6 +43,7 @@ export default function Register() {
     const [error, setError] = useState("");
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [noTransitionOpened, setNoTransitionOpened] = useState(false);
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -35,29 +55,27 @@ export default function Register() {
         setPasswordError('');
     };
 
-
     const handleRegister = () => {
         if (!firstName || !lastName || !email || !password || !confirmPassword) {
             setError("Please fill in all fields");
             return;
         } else if (!isValidEmail(email)) {
             setEmailError('Invalid email format');
+            return;
         }
 
         if (password !== confirmPassword) {
             setPasswordError("Passwords do not match");
             return;
+        } else if (password.length < 8) {
+            setPasswordError("Password too short");
+            return;
         }
-
-        // Perform registration logic here
-
         setError("");
+        setNoTransitionOpened(true);
     };
 
-
     const isValidEmail = (email: string) => {
-        // Email validation logic here
-        // You can use a regular expression or any other method to validate the email format
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
@@ -96,6 +114,7 @@ export default function Register() {
                             label="Password"
                             placeholder="Enter your password"
                             required
+                            description="Password must be at least 8 characters long"
                             value={password}                            
                             onChange={handlePasswordChange}
                             error={passwordError}
@@ -128,6 +147,7 @@ export default function Register() {
                     </Stack>
                 </Paper>
             </Container>
+            <ConfimRegistrationModal isOpen={noTransitionOpened} onClose={() => setNoTransitionOpened(false)} />
         </div>
     );
 }
