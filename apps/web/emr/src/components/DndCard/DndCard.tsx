@@ -13,26 +13,39 @@ import {
   rem,
   List,
   TextInput,
+  Select,
 } from '@mantine/core';
 import classes from './DndCard.module.css';
 
 const data = [
   {
     teamName: 'Team Alpha',
-    leader: 'Chiliman',
-    members: ['John Doe', 'Jane Doe', 'Alice Doe'],
+    members: [
+      { name: 'John Doe', role: 'Team Leader' },
+      { name: 'Jane Doe', role: 'Medic' },
+      { name: 'Alice Doe', role: 'Pilot' },
+    ],
     status: 'Standby',
   },
   {
     teamName: 'Team Bravo',
-    leader: 'Poptic',
-    members: ['John Doe', 'Jane Doe', 'Alice Doe'],
+    members: [
+      { name: 'John Doe', role: 'Team Leader' },
+      { name: 'Jane Doe', role: 'Medic' },
+      { name: 'Alice Doe', role: 'Pilot' },
+      { name: 'Bob Doe', role: 'Security' },
+    ],
     status: 'Standby',
   },
   {
     teamName: 'Team Charlie',
-    leader: 'Milo Wilo',
-    members: ['John Doe', 'Jane Doe', 'Alice Doe'],
+    members: [
+      { name: 'John Doe', role: 'Team Leader' },
+      { name: 'Jane Doe', role: 'Medic' },
+      { name: 'Alice Doe', role: 'Pilot' },
+      { name: 'Bob Doe', role: 'Security' },
+      { name: 'Charlie Doe', role: 'QRF' },
+    ],
     status: 'Standby',
   },
 ];
@@ -42,7 +55,11 @@ export function ArticleCard() {
   const theme = useMantineTheme();
   const [isEditingTeamName, setIsEditingTeamName] = useState(false);
   const [teamName, setTeamName] = useState('Team Alpha');
-  const [teamMembers, setTeamMembers] = useState(['John Doe', 'Jane Doe', 'Alice Doe']);
+  const [teamMembers, setTeamMembers] = useState([
+    { name: 'John Doe', role: 'Team Leader' },
+    { name: 'Jane Doe', role: 'Medic' },
+    { name: 'Alice Doe', role: 'Pilot' },
+  ]);
 
   const handleEditTeamNameClick = () => {
     setIsEditingTeamName(!isEditingTeamName);
@@ -54,15 +71,32 @@ export function ArticleCard() {
 
   const handleTeamMemberChange = (index: number, value: string) => {
     const newMembers = [...teamMembers];
-    newMembers[index] = value;
+    newMembers[index].name = value;
     setTeamMembers(newMembers);
   };
+
+  const handleRoleChange = (index: number, value: string) => {
+    const newMembers = [...teamMembers];
+    newMembers[index].role = value;
+    setTeamMembers(newMembers);
+  };
+
+  const sortedTeamMembers = teamMembers.sort((a, b) => {
+    const roleOrder: { [key: string]: number } = {
+      'Team Leader': 0,
+      'Pilot': 1,
+      'Medic': 2,
+      'Security': 3,
+      'QRF': 4,
+    };
+    return roleOrder[a.role] - roleOrder[b.role];
+  });
 
   return (
     <Card radius="md" className={classes.card} shadow="0 2px 10px rgba(0, 0, 0, 0.3)">
       <Card.Section>
         <a {...linkProps}>
-          <Image src="https://i.imgur.com/9aWAt37.png" height={180} />
+          <Image src="https://i.imgur.com/9aWAt37.png" height={120} />
         </a>
       </Card.Section>
 
@@ -88,16 +122,25 @@ export function ArticleCard() {
       </Text>
 
       <List size="sm">
-        {teamMembers.map((member, index) => (
+        {sortedTeamMembers.map((member, index) => (
           <List.Item key={index}>
-            {isEditingTeamName ? (
-              <TextInput
-                value={member}
-                onChange={(event) => handleTeamMemberChange(index, event.target.value)}
-              />
-            ) : (
-              member
-            )}
+            <Group>
+              <Text>
+                <b>{member.role}:</b> {!isEditingTeamName ? member.name : (
+                  <TextInput
+                    value={member.name}
+                    onChange={(event) => handleTeamMemberChange(index, event.target.value)}
+                  />
+                )}
+              </Text>
+              {isEditingTeamName && (
+                <Select
+                  value={member.role}
+                  onChange={(value) => handleRoleChange(index, value as string)}
+                  data={['Team Leader', 'Pilot', 'Medic', 'Security', 'QRF']}
+                />
+              )}
+            </Group>
           </List.Item>
         ))}
       </List>
