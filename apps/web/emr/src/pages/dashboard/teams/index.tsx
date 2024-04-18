@@ -1,6 +1,6 @@
 import classes from './Teams.module.css';
 import Layout from "@/layout/dashboard-layout";
-import { ArticleCard } from '@/components/DndCard/DndCard';
+import { TeamCard } from '@/components/TeamCard/TeamCard';
 import { DndList } from '@/components/DndBoard/DndBoard';
 
 export default function Dispatch(){
@@ -10,15 +10,15 @@ export default function Dispatch(){
                 <h1>Teams</h1>
                 <div className={classes.container}>
                     <div className={classes.cardSpace}>
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
-                        <ArticleCard />
+                        <TeamCard />
+                        <TeamCard />
+                        <TeamCard />
+                        <TeamCard />
+                        <TeamCard />
+                        <TeamCard />
+                        <TeamCard />
+                        <TeamCard />
+                        <TeamCard />
                     </div>
                 </div>
             </div>
