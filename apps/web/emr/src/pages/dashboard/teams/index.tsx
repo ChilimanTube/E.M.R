@@ -1,7 +1,7 @@
 import classes from './Teams.module.css';
 import Layout from "@/layout/dashboard-layout";
 import { TeamCard } from '@/components/TeamCard/TeamCard';
-import { DndList } from '@/components/DndBoard/DndBoard';
+import { DndBoard } from '@/components/DndBoard/DndBoard';
 
 export default function Dispatch(){
     return (

@@ -11,7 +11,6 @@ const theme = createTheme({
  },
 });
 
-//TODO: Sort the white theme
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider theme={theme} defaultColorScheme='dark' forceColorScheme='dark'>
