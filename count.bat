@@ -14,3 +14,6 @@ PAUSE
 REM cd ../..
 REM cd Users\Vojtáno\Desktop\Own Projects\E.M.R\E.M.R\apps\web\emr
 REM cloc src
+
+
+REM cloc src --by-file --exclude-lang=CSS
