@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import { Text } from '@mantine/core';
-import { useListState } from '@mantine/hooks';
+import { useListState, useId } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import classes from './DndBoard.module.css';
 

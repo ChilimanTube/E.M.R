@@ -10,7 +10,7 @@ export default function Dispatch(){
             <div className={classes.mainContainer}>
                 <h1>Dispatch</h1>
                 <div className={classes.container}>
-                    <Kanban />
+                    <DndBoard />
                 </div>
             </div>
         </Layout>
