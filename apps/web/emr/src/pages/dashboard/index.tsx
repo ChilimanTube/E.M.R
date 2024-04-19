@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useEffect, useState } from 'react';
 import { Group, Paper, SimpleGrid, Text, Button } from '@mantine/core';
 import { Navbar } from "@/components/Navbar/Navbar";
 import Layout from "@/layout/dashboard-layout";
@@ -53,12 +54,29 @@ export function StatsGrid() {
 
 
 export default function Dashboard() {
+  const [message, setMessage] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    // Fetch data from the API endpoint
+    fetch('/api/hello')
+      .then((response) => response.json())
+      .then((data) => {
+        setMessage(data.message);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+
     return (
         <Layout>
             <div className={classes.mainContainer}>
                 <h1>Dashboard</h1>
                 <div className={classes.container}>
                     <StatsGrid />
+                    {message && <p>{message}</p>}
                 </div>
             </div>
         </Layout>

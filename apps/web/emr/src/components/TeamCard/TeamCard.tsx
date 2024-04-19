@@ -16,6 +16,7 @@ import {
   Select,
 } from '@mantine/core';
 import classes from './TeamCard.module.css';
+import { TeamEditModal } from '../TeamModal/TeamModal';
 
 export function TeamCard() {
   const linkProps = { href: '#' };
@@ -28,8 +29,9 @@ export function TeamCard() {
     { name: 'Jane', role: 'Medic' },
     { name: 'Alice', role: 'Pilot' },
   ]);
-  
+
   const id = '123456';
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEditTeamNameClick = () => {
     setIsEditingTeamName(!isEditingTeamName);
@@ -47,16 +49,16 @@ export function TeamCard() {
 
   const handleRoleChange = (index: number, value: string) => {
     const newMembers = [...teamMembers];
-    const currentTeamLeaderIndex = newMembers.findIndex(member => member.role === 'Team Leader');
-  
+    const currentTeamLeaderIndex = newMembers.findIndex((member) => member.role === 'Team Leader');
+
     if (value === 'Team Leader') {
       if (currentTeamLeaderIndex !== -1) {
         newMembers[currentTeamLeaderIndex].role = 'Unassigned';
       }
     }
-  
+
     newMembers[index].role = value;
-  
+
     setTeamMembers(newMembers);
   };
 
@@ -71,19 +73,19 @@ export function TeamCard() {
   };
 
   const handleDeleteTeam = () => {
-      // Add your logic here to delete the team
-      // You can remove the card from the UI or make an API call to delete the team from the backend
+    // Add your logic here to delete the team
+    // You can remove the card from the UI or make an API call to delete the team from the backend
     console.log('Team deleted');
   };
 
   const sortedTeamMembers = teamMembers.sort((a, b) => {
     const roleOrder: { [key: string]: number } = {
       'Team Leader': 0,
-      'Pilot': 1,
-      'Medic': 2,
-      'Security': 3,
-      'QRF': 4,
-      'Unassigned': 5,
+      Pilot: 1,
+      Medic: 2,
+      Security: 3,
+      QRF: 4,
+      Unassigned: 5,
     };
     return roleOrder[a.role] - roleOrder[b.role];
   });
@@ -141,7 +143,7 @@ export function TeamCard() {
                   <b>{member.role}:</b> {member.name}
                 </Text>
               ) : (
-                <Group>
+                <Group gap="xs" align="center">
                   <TextInput
                     value={member.name}
                     onChange={(event) => handleTeamMemberChange(index, event.target.value)}
@@ -177,11 +179,8 @@ export function TeamCard() {
         </Center>
 
         <Group gap={8} mr={0}>
-          <ActionIcon className={classes.action} onClick={handleEditTeamNameClick}>
-            <IconPencil
-              style={{ width: rem(16), height: rem(16) }}
-              color={theme.colors.blue[7]}
-            />
+          <ActionIcon className={classes.action} onClick={() => setIsModalOpen(true)}>
+            <IconPencil style={{ width: rem(16), height: rem(16) }} color={theme.colors.blue[7]} />
           </ActionIcon>
           {isEditingTeamName && (
             <ActionIcon className={classes.action} onClick={handleAddMember}>
@@ -193,6 +192,18 @@ export function TeamCard() {
           </ActionIcon>
         </Group>
       </Group>
+
+      <TeamEditModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        teamName={teamName}
+        onTeamNameChange={handleTeamNameChange}
+        teamMembers={teamMembers}
+        onTeamMemberChange={handleTeamMemberChange}
+        onRoleChange={handleRoleChange}
+        onAddMember={handleAddMember}
+        onRemoveMember={handleRemoveMember}
+      />
     </Card>
   );
 }
