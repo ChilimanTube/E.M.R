@@ -5,3 +5,4 @@
 - [React](https://react.dev)
 - [Mantine](https://mantine.dev/)
 - [Next.js](https://nextjs.org)
+- [Flask](https://flask.palletsprojects.com)

@@ -1,5 +1,8 @@
 Statistics page:
 ☐ Make donut charts responsive @1h
 ☐ Navbar shows active page @2h
-☐ Check if the screen flickering happens even on other monitors @bug @high
+✔ Check if the screen flickering happens even on other monitors @bug @high 
 ☐ Testing
+
+Auth:
+☐ Delete comments and implement database connections etc. @1h
