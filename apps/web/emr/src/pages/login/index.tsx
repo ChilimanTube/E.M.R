@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 import classes from './login.module.css';
+import axios from 'axios';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -42,11 +43,16 @@ export default function Login() {
         }
         
         if (email && password && isValidEmail(email)) {
-            // Perform sign-in logic here if all validations pass
-            // Redirect to the dashboard page
-            window.location.href = '/dashboard';
+            axios.post('/api/login', {
+                email: email,
+                password: password
+            }).then(response => {
+                console.log('Login successful:', response.data);
+                window.location.href = '/dashboard';
+            }).catch(error => {
+                console.error('Login error:', error.response.data);
+            });
         }
-        // Perform sign-in logic here if all validations pass
     };
 
     const isValidEmail = (email: string) => {
