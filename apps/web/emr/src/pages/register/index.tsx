@@ -15,6 +15,7 @@ import {
 
 import classes from "./register.module.css";
 import Link from "next/link";
+import axios from 'axios';
 
 function ConfimRegistrationModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
     return (
@@ -37,6 +38,7 @@ function ConfimRegistrationModal({ isOpen, onClose }: { isOpen: boolean, onClose
 export default function Register() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -57,7 +59,7 @@ export default function Register() {
 
     const handleRegister = () => {
         if (!firstName || !lastName || !email || !password || !confirmPassword) {
-            setError("Please fill in all fields");
+            setError("Please fill in all required fields");
             return;
         } else if (!isValidEmail(email)) {
             setEmailError('Invalid email format');
@@ -72,7 +74,19 @@ export default function Register() {
             return;
         }
         setError("");
-        setNoTransitionOpened(true);
+
+        axios.post('/api/auth/register', {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        }).then(response => {
+            console.log('Registration successful:', response.data);
+            setNoTransitionOpened(true);
+        }).catch(error => {
+            console.error('Registration error:', error.response.data);
+            setError("Registration failed. Please try again.");
+        });
     };
 
     const isValidEmail = (email: string) => {
@@ -101,6 +115,13 @@ export default function Register() {
                             required
                             value={lastName}
                             onChange={(event) => setLastName(event.currentTarget.value)}
+                        />
+                        <TextInput
+                            label="Username"
+                            placeholder="Enter your username"
+                            required={false}
+                            value={username}
+                            onChange={(event) => setUsername(event.currentTarget.value)}
                         />
                         <TextInput
                             label="Email"

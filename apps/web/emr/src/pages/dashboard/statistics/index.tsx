@@ -169,18 +169,3 @@ export default function Statistics() {
     </Layout>
   );
 }
-
-/* 
-<RadarChart
-              h={300}
-              data={radarData}
-              dataKey="product"
-              withPolarRadiusAxis
-              series={[
-                { name: 'current_week', color: 'lime.4', opacity: 0.1 },
-                { name: 'sales_february', color: 'cyan.4', opacity: 0.1 },
-              ]}
-              gridColor='white.1'
-
-            />
-*/
