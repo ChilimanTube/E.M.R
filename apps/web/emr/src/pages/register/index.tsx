@@ -58,7 +58,7 @@ export default function Register() {
     };
 
     const handleRegister = () => {
-        if (!firstName || !lastName || !email || !password || !confirmPassword) {
+        if (!username|| !email || !password || !confirmPassword) {
             setError("Please fill in all required fields");
             return;
         } else if (!isValidEmail(email)) {
@@ -75,11 +75,12 @@ export default function Register() {
         }
         setError("");
 
-        axios.post('/api/auth/register', {
+        axios.post('http://127.0.0.1:5000/api/register', {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            password: password
+            password: password,
+            username: username
         }).then(response => {
             console.log('Registration successful:', response.data);
             setNoTransitionOpened(true);
@@ -105,21 +106,19 @@ export default function Register() {
                         <TextInput
                             label="First Name"
                             placeholder="Enter your first name"
-                            required
                             value={firstName}
                             onChange={(event) => setFirstName(event.currentTarget.value)}
                         />
                         <TextInput
                             label="Last Name"
                             placeholder="Enter your last name"
-                            required
                             value={lastName}
                             onChange={(event) => setLastName(event.currentTarget.value)}
                         />
                         <TextInput
                             label="Username"
                             placeholder="Enter your username"
-                            required={false}
+                            required
                             value={username}
                             onChange={(event) => setUsername(event.currentTarget.value)}
                         />

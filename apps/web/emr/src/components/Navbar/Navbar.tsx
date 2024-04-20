@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Group, Code } from '@mantine/core';
 import Link from 'next/link';
 import {
@@ -18,6 +18,7 @@ import {
   IconUser,
 } from '@tabler/icons-react';
 import classes from './Navbar.module.css';
+import axios from 'axios';
 
 const data = [
   { link: '/dashboard', label: 'Dashboard', icon: IconCategory, disabled: false},
@@ -33,8 +34,23 @@ const data = [
   { link: '', label: 'Settings', icon: IconSettings, disabled: true },
 ];
 
+
 export function Navbar() {
   const [active, setActive] = useState('Billing');
+  const [username, setUsername] = useState('')
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/api/user');
+        setUsername(response.data.username);
+      } catch (error) {
+        console.error('Error fetching username:', error);
+      }
+    };
+
+    fetchUsername();
+  }, []);
 
   const links = data.map((item) => (
     <Link
@@ -64,7 +80,7 @@ export function Navbar() {
       <div className={classes.footer}>
         <Link href="/" className={`${classes.link} ${classes.disabledLink}`} onClick={(event) => event.preventDefault()}>
           <IconUser className={classes.linkIcon} stroke={1.5} />
-          <span>Username</span>
+          <span>{username}</span>
         </Link>
         <Link href="/login" className={`${classes.link}`}>
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
