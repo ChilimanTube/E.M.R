@@ -1,46 +1,103 @@
 import React, { useState } from "react";
 import classes from './ReportEmergency.module.css';
 import { TeamCard } from "@/components/TeamCard/TeamCard";
-import { Stepper, Select, Button, Input } from '@mantine/core';
+import { Stepper, Select, Button, TextInput, Text, Slider } from '@mantine/core';
+import {
+    IconMapPin,
+    IconUsers,
+    IconFirstAidKit,
+    IconHelpHexagon,
+    IconSlice,
+    IconHourglassHigh
+} from '@tabler/icons-react';
 
 const locations = [
     { group: 'Stanton', items: ['Hurston', 'Crusader', 'MicroTech', 'ArcCorp'] },
     { group: 'Pyro', items: ['Pyro I', 'Pyro II', 'Pyro IV', 'Pyro V', 'Pyro VI'] }
 ];
 
+const emergencyTypes = ['Stranded', 'Incapacitated', 'Injured'];
+const injuryTiers = ['Tier 1', 'Tier 2', 'Tier 3', 'No injuries'];
+const crimeStatLevels = ['None', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5']
+
+const marks = [
+    { value: 30, label: '30 Mins' },
+    { value: 60, label: '1 Hour' },
+    { value: 90, label: '1 Hour 30 Mins' },
+    { value: 120, label: '2 Hours' },
+];
 
 export default function ReportEmergency() {
     const [showForm, setShowForm] = useState(false);
     const [active, setActive] = useState(1);
-    const nextStep = () => setActive((current) => (current < 5 ? current + 1 : current));
+    const nextStep = () => setActive((current) => (current < 6 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+    const [highestStepVisited, setHighestStepVisited] = useState(active);
+    const [userSelections, setUserSelections] = useState({
+        location: '',
+        client: '', // TODO: Need to make an array later
+        type: '',
+        injury: '',
+        crimeStat: '',
+        timeLeft: 90
+    });
 
+
+    const handleStepChange = (nextStep: number) => {
+        const isOutOfBounds = nextStep > 3 || nextStep < 0;
+
+        if (isOutOfBounds) {
+            return;
+        }
+
+        setActive(nextStep);
+        setHighestStepVisited((hSC) => Math.max(hSC, nextStep));
+    };
+
+    const shouldAllowSelectStep = (step: number) => highestStepVisited >= step && active !== step;
 
     return (
         <main className={classes.main}>
             <h1>Report Emergency</h1>
             <div className={classes.container}>
                 {!showForm && (
-                    <Button
-                        onClick={() => {
-                            setShowForm(true);
-                            setActive(0);
-                        }}
-                        className={classes.herobutton}
-                        color="red"
-                        size="lg"
-                        variant="gradient"
-                        gradient={{ from: 'red', to: 'darkRed', deg: 90 }}
-                    >
-                        SOS
-                    </Button>
+                    <div>
+                        <Text>Need help? Let us come to you!</Text>
+                        <div className={classes.buttonContainer}>
+                            <Button
+                                onClick={() => {
+                                    setShowForm(true);
+                                    setActive(0);
+                                }}
+                                className={classes.herobutton}
+                                color="red"
+                                size="lg"
+                                variant="gradient"
+                                gradient={{ from: 'red', to: 'darkRed', deg: 90 }}
+                            >
+                                SOS
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    window.location.href = '/dashboard';
+                                }}
+                                className={classes.herobutton}
+                                color="red"
+                                size="lg"
+                                variant="light"
+                                gradient={{ from: 'red', to: 'darkRed', deg: 90 }}
+                            >
+                                Cancel
+                            </Button>
+                        </div>
+                    </div>
                 )}
 
                 <div className={`${classes.formContainer} ${showForm ? classes.fadeIn : classes.fadeOut}`}>
                     {showForm && (
 
                         <Stepper active={active} onStepClick={setActive} color="red" classNames={{ separator: classes.separator }}>
-                            <Stepper.Step label="Location" description="Select the location">
+                            <Stepper.Step label="Location" description="Select the location" icon=<IconMapPin /> allowStepSelect={shouldAllowSelectStep(0)}>
                                 <Select
                                     label="Select the location of the emergency"
                                     placeholder="Select nearest planet or moon"
@@ -48,11 +105,14 @@ export default function ReportEmergency() {
                                     searchable
                                     required
                                     comboboxProps={{
-                                        shadow: 'md',
+                                        shadow: 'lg',
                                         transitionProps: { transition: 'pop', duration: 200 },
                                     }}
                                     className={classes.select}
                                     labelProps={{ className: classes.label }}
+                                    nothingFoundMessage="No locations found"
+                                    value={userSelections.location}
+                                    onChange={(value) => setUserSelections({ ...userSelections, location: value ?? '' })}
                                 />
                                 <div className={classes.buttonContainer}>
                                     <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
@@ -64,8 +124,18 @@ export default function ReportEmergency() {
                                 </div>
 
                             </Stepper.Step>
-                            <Stepper.Step label="Clients" description="Number of clients">
-                                <Input />
+                            <Stepper.Step label="Clients" description="Number of clients" icon=<IconUsers /> allowStepSelect={shouldAllowSelectStep(1)}>
+                                <div className={classes.formArea}>
+                                    <TextInput
+                                        label="Enter your RSI Handle"
+                                        labelProps={{ className: classes.label }}
+                                        placeholder="RSI Handle (in-game name)"
+                                        required
+                                        className={classes.inputLarge}
+                                        value={userSelections.client}
+                                        onChange={(event) => setUserSelections({ ...userSelections, client: event.target.value ?? '' })}
+                                    />
+                                </div>
                                 <div className={classes.buttonContainer}>
                                     <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
                                         Previous
@@ -75,8 +145,23 @@ export default function ReportEmergency() {
                                     </Button>
                                 </div>
                             </Stepper.Step>
-                            <Stepper.Step label="Injuries" description="Highest Tier injury">
-                                Step 3 content: Get full access
+                            <Stepper.Step label="Type" description="Type of emergency" icon=<IconHelpHexagon /> allowStepSelect={shouldAllowSelectStep(2)}>
+                                <Select
+                                    label="Select the type of emergency"
+                                    placeholder="Select emergency type"
+                                    data={emergencyTypes}
+                                    searchable
+                                    required
+                                    comboboxProps={{
+                                        shadow: 'lg',
+                                        transitionProps: { transition: 'pop', duration: 200 },
+                                    }}
+                                    className={classes.select}
+                                    labelProps={{ className: classes.label }}
+                                    nothingFoundMessage="No types match the search query"
+                                    value={userSelections.type}
+                                    onChange={(value) => setUserSelections({ ...userSelections, type: value ?? '' })}
+                                />
                                 <div className={classes.buttonContainer}>
                                     <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
                                         Previous
@@ -86,8 +171,23 @@ export default function ReportEmergency() {
                                     </Button>
                                 </div>
                             </Stepper.Step>
-                            <Stepper.Step label="CrimeStat" description="Highest CrimeStat Level">
-                                Step 3 content: Get full access
+                            <Stepper.Step label="Injuries" description="Highest Tier injury" icon=<IconFirstAidKit /> allowStepSelect={shouldAllowSelectStep(3)}>
+                                <Select
+                                    label="Select the highest injury tier you or your team has"
+                                    placeholder="Select highest injury tier"
+                                    data={injuryTiers}
+                                    searchable
+                                    required
+                                    comboboxProps={{
+                                        shadow: 'lg',
+                                        transitionProps: { transition: 'pop', duration: 200 },
+                                    }}
+                                    className={classes.select}
+                                    labelProps={{ className: classes.label }}
+                                    nothingFoundMessage="No tiers match the search query"
+                                    value={userSelections.injury}
+                                    onChange={(value) => setUserSelections({ ...userSelections, injury: value ?? '' })}
+                                />
                                 <div className={classes.buttonContainer}>
                                     <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
                                         Previous
@@ -97,8 +197,51 @@ export default function ReportEmergency() {
                                     </Button>
                                 </div>
                             </Stepper.Step>
-                            <Stepper.Step label="Time Left" description="Time left before death">
-                                Step 3 content: Get full access
+                            <Stepper.Step label="CrimeStat" description="Highest CrimeStat Level" icon=<IconSlice /> allowStepSelect={shouldAllowSelectStep(4)}>
+                                <Select
+                                    label="Select the highest crime stat level you or your team has"
+                                    placeholder="Select highest crime stat level"
+                                    data={crimeStatLevels}
+                                    searchable
+                                    required
+                                    comboboxProps={{
+                                        shadow: 'lg',
+                                        transitionProps: { transition: 'pop', duration: 200 },
+                                    }}
+                                    className={classes.select}
+                                    labelProps={{ className: classes.label }}
+                                    nothingFoundMessage="No CrimeStat levels match the search query"
+                                    value={userSelections.crimeStat}
+                                    onChange={(value) => setUserSelections({ ...userSelections, crimeStat: value ?? '' })}
+                                />
+                                <div className={classes.buttonContainer}>
+                                    <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
+                                        Previous
+                                    </Button>
+                                    <Button onClick={nextStep} color="red" variant="light" className={classes.button}>
+                                        Next
+                                    </Button>
+                                </div>
+                            </Stepper.Step>
+                            <Stepper.Step label="Time Left" description="Time left before death" icon=<IconHourglassHigh /> allowStepSelect={shouldAllowSelectStep(5)}>
+                                <div className={classes.sliderArea}>
+                                    <Text size="md" mt="xl" fw={700} className={classes.text}>Select the time until death</Text>
+                                    <Slider
+                                        color="red"
+                                        marks={marks}
+                                        max={120}
+                                        defaultValue={90}
+                                        label={(value) => `${value} minutes`}
+                                        labelTransitionProps={{
+                                            transition: 'skew-down',
+                                            duration: 150,
+                                            timingFunction: 'linear',
+                                        }}
+                                        className={classes.slider}
+                                        value={userSelections.timeLeft}
+                                        onChange={(value) => setUserSelections({ ...userSelections, timeLeft: value ?? '' })}
+                                    />
+                                </div>
                                 <div className={classes.buttonContainer}>
                                     <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
                                         Previous
@@ -109,12 +252,12 @@ export default function ReportEmergency() {
                                 </div>
                             </Stepper.Step>
                             <Stepper.Completed>
-                                Completed, click back button to get to previous step
+                                <Text size="md" mt="xl" fw={700} className={classes.text}>Report complete. Click submit to initiate rescue.</Text>
                                 <div className={classes.buttonContainer}>
                                     <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
                                         Previous
                                     </Button>
-                                    <Button onClick={() => console.log("Submit")} color="red" variant="light" className={classes.button}>
+                                    <Button onClick={() => window.location.href = '/'} color="red" variant="light" className={classes.button}>
                                         Submit
                                     </Button>
                                 </div>

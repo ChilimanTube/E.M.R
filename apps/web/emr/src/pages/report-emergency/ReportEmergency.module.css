@@ -39,6 +39,7 @@
 
 .herobutton {
     margin-top: 13vw;
+    margin: 0 5px;
 }
 
 .select {
@@ -61,4 +62,36 @@
 
 .buttonContainer .button {
     margin: 0 5px;
+}
+
+.inputLarge {
+    width: 30vw;
+    margin: 0 auto;
+    margin-top: 75px;
+    margin-bottom: 75px;
+}
+
+.formArea {
+    border-radius: 10px;
+    margin: 0 auto;
+    max-width: 35vw;
+}
+
+.slider {
+    width: 30vw;
+    margin: 0 auto;
+    margin-top: 75px;
+    margin-bottom: 75px;
+}
+
+.text {
+    font-size: 1rem;
+    margin: 0 auto;
+    text-align: center;
+    font-weight: 700;
+    
+}
+
+.sliderArea {
+    
 }
