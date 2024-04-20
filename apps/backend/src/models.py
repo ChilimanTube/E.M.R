@@ -1,4 +1,6 @@
-from app import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 
 class Users(db.Model):
@@ -6,6 +8,8 @@ class Users(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
+    first_name = db.Column(db.String(80), unique=False, nullable=False)
+    last_name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
@@ -18,6 +22,7 @@ class Teams(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
+    status = db.Column(db.String(80), unique=False, nullable=False)
 
     def __repr__(self):
         return '<Team %r>' % self.name
@@ -40,6 +45,7 @@ class Alerts(db.Model):
     name = db.Column(db.String(80), unique=False, nullable=False)
     alert_type = db.Column(db.String(80), unique=False, nullable=False)
     details = db.Column(db.String(80), unique=False, nullable=False)
+    datetime = db.Column(db.DateTime, nullable=False)
 
 
 class AlertResult(db.Model):
@@ -48,6 +54,15 @@ class AlertResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     alert_id = db.Column(db.Integer, db.ForeignKey('alerts.id'), nullable=False)
     result = db.Column(db.String(80), nullable=False)
+    completion_time = db.Column(db.DateTime, nullable=False)
+
+
+class Responders(db.Model):
+    __tablename__ = 'responders'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
+    team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=True)
 
     def __repr__(self):
         return '<AlertResult %r>' % self.result
