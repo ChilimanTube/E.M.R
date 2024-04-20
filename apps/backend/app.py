@@ -6,11 +6,11 @@ from src.config import SQLALCHEMY_DATABASE_URI
 
 app = Flask(__name__)
 
-app.register_blueprint(auth_bp)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+app.register_blueprint(auth_bp)
 
 
 @app.route('/dashboard')
