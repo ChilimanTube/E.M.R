@@ -24,14 +24,14 @@ const data = [
   { link: '/dashboard', label: 'Dashboard', icon: IconCategory, disabled: false },
   { link: '/dashboard/dispatch', label: 'Dispatch', icon: IconHeartRateMonitor, disabled: false },
   { link: '/dashboard/teams', label: 'Teams', icon: IconUsers, disabled: false },
-  { link: '', label: 'Emergencies', icon: IconHeartbeat, disabled: true },
+  { link: '/dashboard/emergencies', label: 'Emergencies', icon: IconHeartbeat, disabled: false },
   { link: '/dashboard/statistics', label: 'Statistics', icon: IconChartPie, disabled: false },
-  { link: '', label: 'Chat', icon: IconMessageCircle, disabled: true },
-  { link: '', label: 'Map', icon: IconMap, disabled: true },
-  { link: '', label: 'Guides', icon: IconBook, disabled: true },
+  { link: '/dashboard/chat', label: 'Chat', icon: IconMessageCircle, disabled: true },
+  { link: '/dashboard/map', label: 'Map', icon: IconMap, disabled: true },
+  { link: '/dashboard/guides', label: 'Guides', icon: IconBook, disabled: true },
   { link: 'https://www.medrunner.space/emergency-response-guide', label: 'ERG', icon: IconFileDescription, disabled: false },
-  { link: '', label: 'Medals', icon: IconBadges, disabled: true },
-  { link: '', label: 'Settings', icon: IconSettings, disabled: true },
+  { link: '/dashboard/medals', label: 'Medals', icon: IconBadges, disabled: true },
+  { link: '/dashboard/settings', label: 'Settings', icon: IconSettings, disabled: true },
 ];
 
 export function Navbar() {

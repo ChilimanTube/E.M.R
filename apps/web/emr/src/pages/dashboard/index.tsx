@@ -10,6 +10,7 @@ import {
     IconUsers,
     IconUrgent,
   } from '@tabler/icons-react';
+import { DndCard } from "@/components/DndCard/DndCard";
 
 const icons = {
     team: IconUsers,
@@ -58,7 +59,6 @@ export default function Dashboard() {
 
 
   useEffect(() => {
-    // Fetch data from the API endpoint
     fetch('/api/hello')
       .then((response) => response.json())
       .then((data) => {
@@ -76,7 +76,9 @@ export default function Dashboard() {
                 <h1>Dashboard</h1>
                 <div className={classes.container}>
                     <StatsGrid />
-                    {message && <p>{message}</p>}
+                    <div>
+                      <DndCard />
+                    </div>
                 </div>
             </div>
         </Layout>
