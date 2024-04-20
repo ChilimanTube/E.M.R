@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_migrate import Migrate
 from routes.auth import auth_bp
 from flask_sqlalchemy import SQLAlchemy
 from config import SQLALCHEMY_DATABASE_URI
@@ -9,6 +10,7 @@ app.register_blueprint(auth_bp)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 @app.route('/dashboard')

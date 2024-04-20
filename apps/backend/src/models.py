@@ -22,6 +22,7 @@ class Teams(db.Model):
     def __repr__(self):
         return '<Team %r>' % self.name
 
+
 class Roles(db.Model):
     __tablename__ = 'roles'
 
@@ -31,13 +32,15 @@ class Roles(db.Model):
     def __repr__(self):
         return '<Role %r>' % self.name
 
+
 class Alerts(db.Model):
-    __tablename__ = 'statistics'
+    __tablename__ = 'alerts'
 
     id = db.Column(db.Integer, primary_key=True)
-    namne = db.Column(db.String(80), unique=True, nullable=False)
-    type = db.Column(db.String(80), unique=True, nullable=False)
-    details = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    alert_type = db.Column(db.String(80), unique=False, nullable=False)
+    details = db.Column(db.String(80), unique=False, nullable=False)
+
 
 class AlertResult(db.Model):
     __tablename__ = 'alert_result'
@@ -48,4 +51,3 @@ class AlertResult(db.Model):
 
     def __repr__(self):
         return '<AlertResult %r>' % self.result
-
