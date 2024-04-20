@@ -37,11 +37,28 @@
     padding-inline: 20px;
 }
 
-.button {
+.herobutton {
     margin-top: 13vw;
 }
 
 .select {
-    margin-top: 75px;
     max-width: 30vw;
+    margin: 0 auto;
+    margin-top: 75px;
+}
+
+.label {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.buttonContainer .button {
+    margin: 0 5px;
 }
