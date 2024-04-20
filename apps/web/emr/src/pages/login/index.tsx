@@ -14,6 +14,7 @@ import {
 import Link from 'next/link';
 import classes from './login.module.css';
 import axios from 'axios';
+import { saveTokenToLocalStorage, setupAxiosInterceptors } from '../../../axiosSetup';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -41,12 +42,15 @@ export default function Login() {
         if (!password) {
             setPasswordError('Password is required');
         }
-        
+
         if (email && password && isValidEmail(email)) {
             axios.post('http://127.0.0.1:5000/api/login', {
                 email: email,
                 password: password
             }).then(response => {
+                const { access_token } = response.data;
+                saveTokenToLocalStorage(access_token);
+                setupAxiosInterceptors(access_token);
                 console.log('Login successful:', response.data);
                 window.location.href = '/dashboard';
             }).catch(error => {
