@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_migrate import Migrate
-from routes.auth import auth_bp
+from src.routes.auth import auth_bp
 from flask_sqlalchemy import SQLAlchemy
-from config import SQLALCHEMY_DATABASE_URI
+from src.config import SQLALCHEMY_DATABASE_URI
 
 app = Flask(__name__)
 
