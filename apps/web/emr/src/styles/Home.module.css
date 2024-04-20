@@ -40,8 +40,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(25%, auto));
-  max-width: 35%;
+  grid-template-columns: repeat(3, minmax(25%, auto));
+  max-width: 40%;
   width: var(--max-width);
 }
 

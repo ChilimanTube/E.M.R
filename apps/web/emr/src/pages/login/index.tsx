@@ -44,6 +44,10 @@ export default function Login() {
         }
 
         if (email && password && isValidEmail(email)) {
+            let token = localStorage.getItem('jwtToken');
+            if (token !== null) {
+                
+            }
             axios.post('http://127.0.0.1:5000/api/login', {
                 email: email,
                 password: password

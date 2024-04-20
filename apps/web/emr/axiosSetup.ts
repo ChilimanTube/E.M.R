@@ -23,17 +23,21 @@ export const setupAxiosInterceptors = (token: string) => {
     );
 };
 
-const jwtToken = localStorage.getItem('jwtToken');
+// const jwtToken = localStorage.getItem('jwtToken');
+// if (jwtToken !== null) {
+//     setupAxiosInterceptors(jwtToken);
+// }
+
+// axios.get('/api/protected')
+//     .then((response) => {
+//         console.log('Response from protected route:', response.data);
+//     })
+//     .catch((error) => {
+//         console.error('Error fetching protected route:', error);
+//     });
 
 
-if (jwtToken !== null) {
-    setupAxiosInterceptors(jwtToken);
-}
-
-axios.get('/api/protected')
-    .then((response) => {
-        console.log('Response from protected route:', response.data);
-    })
-    .catch((error) => {
-        console.error('Error fetching protected route:', error);
-    });
+// export function getJwtToken() {
+//     localStorage.getItem('jwtToken');
+//     return jwtToken;
+// }

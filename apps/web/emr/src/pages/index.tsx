@@ -25,8 +25,8 @@ export default function Home() {
             </a>
           </p>
           <a href="https://medrunner.space" target="_blank"
-              rel="noopener noreferrer">
-            <Image src={logo} alt="Medrunner Logo" width={120} height={120}/>
+            rel="noopener noreferrer">
+            <Image src={logo} alt="Medrunner Logo" width={120} height={120} />
           </a>
           <div>
             <a
@@ -63,6 +63,19 @@ export default function Home() {
             </h2>
             <p>
               Enter the EMR dashboard.
+            </p>
+          </Link>
+
+          <Link
+            href="/report-emergency"
+            className={styles.card}
+            rel="noopener noreferrer"
+          >
+            <h2>
+              Call MRS <span>-&gt;</span>
+            </h2>
+            <p>
+              Report an emergency.
             </p>
           </Link>
 
