@@ -45,9 +45,10 @@ export default function Dispatch() {
     const handleSubmit = () => {
         axios.post('http://127.0.0.1:5000/api/teams/create', { name: newTeamName, status: 'Standby' })
             .then(response => {
-                const newTeamId = response.data.id;
-                if (newTeamId !== undefined) {
-                    const newTeam: Team = { id: newTeamId, name: newTeamName, status: 'Standby' };
+                console.log('Response from server:', response.data);
+                const newTeam = response.data;
+                if (newTeam && newTeam.id !== undefined) {
+                    console.log('New team id:', newTeam.id);
                     setTeams(prevTeams => [...prevTeams, newTeam]);
                     handleCloseModal();
                 } else {
