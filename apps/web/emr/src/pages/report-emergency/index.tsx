@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import classes from './ReportEmergency.module.css';
-import { Stepper, Select, Button, TextInput, Text, Slider } from '@mantine/core';
+import { Stepper, Select, Button, TextInput, Text, Slider, TagsInput } from '@mantine/core';
 import { IconMapPin, IconUsers, IconFirstAidKit, IconHelpHexagon, IconSlice, IconHourglassHigh } from '@tabler/icons-react';
 import { ReportRecap, recapData as initialRecapData } from '../../components/ReportRecap/ReportRecap';
+import axios from "axios";
 
 const locations = [
     { group: 'Stanton', items: ['Hurston', 'Crusader', 'MicroTech', 'ArcCorp'] },
@@ -27,9 +28,7 @@ export const recapData = [
     { icon: IconFirstAidKit, title: 'Injuries:', description: 'Tier 2', },
     { icon: IconSlice, title: 'CrimeStat:', description: 'Level 1', },
     { icon: IconHourglassHigh, title: 'Time Left:', description: '1 Hour', },
-
 ];
-
 
 export default function ReportEmergency() {
     const [showForm, setShowForm] = useState(false);
@@ -39,7 +38,7 @@ export default function ReportEmergency() {
     const [highestStepVisited, setHighestStepVisited] = useState(active);
     const [userSelections, setUserSelections] = useState({
         location: '',
-        client: '', // TODO: Need to make an array later
+        clients: [] as string[],
         type: '',
         injury: '',
         crimeStat: '',
@@ -52,7 +51,7 @@ export default function ReportEmergency() {
                 case 'Location:':
                     return { ...item, description: userSelections.location };
                 case 'Clients:':
-                    return { ...item, description: userSelections.client };
+                    return { ...item, description: userSelections.clients };
                 case 'Emergency Type:':
                     return { ...item, description: userSelections.type };
                 case 'Injuries:':
@@ -68,17 +67,33 @@ export default function ReportEmergency() {
         return updatedRecapData;
     }
 
-
     const handleStepChange = (nextStep: number) => {
         const isOutOfBounds = nextStep > 6 || nextStep < 0;
-
         if (isOutOfBounds) {
             return;
         }
-
         setActive(nextStep);
         setHighestStepVisited((hSC) => Math.max(hSC, nextStep));
     };
+
+    const handleSubmit = () => {
+        if (!userSelections.location || !userSelections.clients || !userSelections.type || !userSelections.injury || !userSelections.crimeStat || !userSelections.timeLeft) {
+            console.error('Please fill in all required fields');
+            return;
+        }
+        axios.post('http://127.0.0.1:5000/api/emergency',{
+            location: userSelections.location,
+            clients: userSelections.clients,
+            type: userSelections.type,
+            injury: userSelections.injury,
+            crimeStat: userSelections.crimeStat,
+            timeLeft: userSelections.timeLeft
+        }).then(response => {
+            console.log('Emergency reported:', response.data);
+        }).catch(error => {
+            console.error('Emergency report error:', error.response.data);
+        });
+    }
 
     const shouldAllowSelectStep = (step: number) => highestStepVisited >= step && active !== step;
 
@@ -105,7 +120,7 @@ export default function ReportEmergency() {
                             </Button>
                             <Button
                                 onClick={() => {
-                                    window.location.href = '/dashboard';
+                                    window.location.href = '/';
                                 }}
                                 className={classes.herobutton}
                                 color="red"
@@ -121,7 +136,6 @@ export default function ReportEmergency() {
 
                 <div className={`${classes.formContainer} ${showForm ? classes.fadeIn : classes.fadeOut}`}>
                     {showForm && (
-
                         <Stepper active={active} onStepClick={setActive} color="red" classNames={{ separator: classes.separator }}>
                             <Stepper.Step label="Location" description="Select the location" icon=<IconMapPin /> allowStepSelect={shouldAllowSelectStep(0)}>
                                 <Select
@@ -145,18 +159,26 @@ export default function ReportEmergency() {
                                         Next
                                     </Button>
                                 </div>
-
                             </Stepper.Step>
                             <Stepper.Step label="Clients" description="Number of clients" icon=<IconUsers /> allowStepSelect={shouldAllowSelectStep(1)}>
                                 <div className={classes.formArea}>
                                     <TextInput
-                                        label="Enter your RSI Handle"
+                                        label="Enter your RSI Handle (Submitter)"
                                         labelProps={{ className: classes.label }}
                                         placeholder="RSI Handle (in-game name)"
                                         required
                                         className={classes.inputLarge}
-                                        value={userSelections.client}
-                                        onChange={(event) => setUserSelections({ ...userSelections, client: event.target.value ?? '' })}
+                                        value={userSelections.clients[0] || ''}
+                                        onChange={(event) => setUserSelections({ ...userSelections, clients: [event.target.value, ...userSelections.clients.slice(1)] })}
+                                    />
+                                    <TagsInput
+                                        label="Enter your team's RSI Handles"
+                                        labelProps={{ className: classes.label }}
+                                        placeholder="RSI Handles (in-game names)"
+                                        required = {false}
+                                        className={classes.inputLarge}
+                                        value={userSelections.clients.slice(1)}
+                                        onChange={(event: string[]) => setUserSelections({ ...userSelections, clients: [userSelections.clients[0], ...event] })}
                                     />
                                 </div>
                                 <div className={classes.buttonContainer}>
@@ -283,7 +305,7 @@ export default function ReportEmergency() {
                                             <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
                                                 Previous
                                             </Button>
-                                            <Button onClick={() => window.location.href = '/'} color="red" variant="gradient" className={classes.button} gradient={{ from: 'red', to: 'darkRed', deg: 90 }}>
+                                            <Button onClick={handleSubmit} color="red" variant="gradient" className={classes.button} gradient={{ from: 'red', to: 'darkRed', deg: 90 }}>
                                                 Submit
                                             </Button>
                                         </div>

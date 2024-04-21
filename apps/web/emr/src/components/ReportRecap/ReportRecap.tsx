@@ -10,13 +10,12 @@ import {
 import classes from './ReportRecap.module.css';
 
 export const recapData = [
-    { icon: IconMapPin, title: 'Location:', description: 'Hurston', },
-    { icon: IconUsers, title: 'Clients:', description: 'ChilimanTube', },
-    { icon: IconHelpHexagon, title: 'Emergency Type:', description: 'Injured', },
-    { icon: IconFirstAidKit, title: 'Injuries:', description: 'Tier 2', },
-    { icon: IconSlice, title: 'CrimeStat:', description: 'Level 1', },
-    { icon: IconHourglassHigh, title: 'Time Left:', description: '1 Hour', },
-
+    { icon: IconMapPin, title: 'Location:', description: 'Hurston' },
+    { icon: IconUsers, title: 'Clients:', description: ['ChilimanTube', 'Client2', 'Client3'] }, 
+    { icon: IconHelpHexagon, title: 'Emergency Type:', description: 'Injured' },
+    { icon: IconFirstAidKit, title: 'Injuries:', description: 'Tier 2' },
+    { icon: IconSlice, title: 'CrimeStat:', description: 'Level 1' },
+    { icon: IconHourglassHigh, title: 'Time Left:', description: '1 Hour' },
 ];
 
 interface FeatureProps {
@@ -26,6 +25,11 @@ interface FeatureProps {
 }
 
 export function RecapFeature({ icon: Icon, title, description }: FeatureProps) {
+    let formattedDescription = description;
+    
+    if (Array.isArray(description)) {
+        formattedDescription = description.join(', ');
+    }
     return (
         <div>
             <ThemeIcon variant="light" size={40} radius={40} color='red'>
@@ -36,7 +40,7 @@ export function RecapFeature({ icon: Icon, title, description }: FeatureProps) {
                     {title}
                 </Text>
                 <Text size="sm" c="dimmed" lh={1.6} mt={5} fw={500}>
-                    {description}
+                    {formattedDescription}
                 </Text>
             </Group>
         </div>
