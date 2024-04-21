@@ -81,18 +81,10 @@ export default function ReportEmergency() {
             console.error('Please fill in all required fields');
             return;
         }
-        axios.post('http://127.0.0.1:5000/api/emergency',{
-            location: userSelections.location,
-            clients: userSelections.clients,
-            type: userSelections.type,
-            injury: userSelections.injury,
-            crimeStat: userSelections.crimeStat,
-            timeLeft: userSelections.timeLeft
-        }).then(response => {
-            console.log('Emergency reported:', response.data);
-        }).catch(error => {
-            console.error('Emergency report error:', error.response.data);
-        });
+        axios.post('http://127.0.0.1:5000/api/emergency',{ location: userSelections.location, clients: userSelections.clients, type: userSelections.type,
+            injury: userSelections.injury, crimeStat: userSelections.crimeStat, timeLeft: userSelections.timeLeft
+        }).then(response => { console.log('Emergency reported:', response.data);
+        }).catch(error => { console.error('Emergency report error:', error.response.data); });
     }
 
     const shouldAllowSelectStep = (step: number) => highestStepVisited >= step && active !== step;
@@ -111,9 +103,7 @@ export default function ReportEmergency() {
                                     setActive(0);
                                 }}
                                 className={classes.herobutton}
-                                color="red"
-                                size="lg"
-                                variant="gradient"
+                                color="red" size="lg" variant="gradient"
                                 gradient={{ from: 'red', to: 'darkRed', deg: 90 }}
                             >
                                 SOS
@@ -123,9 +113,7 @@ export default function ReportEmergency() {
                                     window.location.href = '/';
                                 }}
                                 className={classes.herobutton}
-                                color="red"
-                                size="lg"
-                                variant="light"
+                                color="red" size="lg" variant="light"
                                 gradient={{ from: 'red', to: 'darkRed', deg: 90 }}
                             >
                                 Cancel
