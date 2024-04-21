@@ -8,7 +8,7 @@ import {
     IconActivity,
     IconUsers
 } from '@tabler/icons-react';
-
+import { Emergency } from '@/pages/dashboard/emergencies/index';
 
 const alertmockdata = [
     { name: 'Alert 1', status: 'Incoming', location: 'Hourston', time: '1 Hour 21 minutes left', injury: 'Tier 2 Injury', clients: '2 Clients' },
@@ -24,7 +24,12 @@ const mockdata = [
     { label: 'Hourston', icon: IconPlanet },
 ];
 
-export default function EmergencyCard() {
+interface EmergencyCardProps {
+    emergency: Emergency;
+    onDelete: () => void;
+}
+
+export default function EmergencyCard({ emergency, onDelete}: EmergencyCardProps) {
     const details = mockdata.map((detail) => (
         <Center key={detail.label}>
             <detail.icon size="1.05rem" className={classes.icon} stroke={1.5} />
