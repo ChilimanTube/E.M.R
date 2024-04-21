@@ -17,7 +17,7 @@ export default function Dispatch() {
     const [teams, setTeams] = useState<Team[]>([]);
 
     useEffect(() => {
-        axios.get('/api/teams')
+        axios.get('http://127.0.0.1:5000/api/teams')
             .then(response => {
                 setTeams(response.data);
             })
@@ -36,9 +36,10 @@ export default function Dispatch() {
     };
 
     const handleSubmit = () => {
-        axios.post('/api/teams/create', { name: newTeamName })
+        axios.post('http://127.0.0.1:5000/api/teams/create', { name: newTeamName, status: 'Standby' })
             .then(response => {
                 const newTeamId = response.data.id;
+                setTeams(prevTeams => [...prevTeams, newTeamId]);
                 handleCloseModal();
             })
             .catch(error => {
@@ -75,9 +76,10 @@ export default function Dispatch() {
                 </div>
                 <div className={classes.container}>
                     <div className={classes.cardSpace}>
-                        {teams.map(team => (
-                            <TeamCard key={team.id} team={team} />
-                        ))}
+                        {teams.map(team => {
+                            console.log('Team:', team);
+                            return <TeamCard key={team.id} team={team} />;
+                        })}
                     </div>
                 </div>
             </div>

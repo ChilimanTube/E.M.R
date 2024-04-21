@@ -27,6 +27,13 @@ class Teams(db.Model):
     def __repr__(self):
         return '<Team %r>' % self.name
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'status': self.status
+        }
+
 
 class Roles(db.Model):
     __tablename__ = 'roles'

@@ -31,7 +31,7 @@ export function TeamCard({ team }: { team: any }) {
   };
   const handleTeamNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTeamName(event.target.value);
-    axios.put(`/api/teams/${team.id}`, { name: event.target.value })
+    axios.put(`http://127.0.0.1:5000/api/teams/${team.id}`, { name: event.target.value })
       .then(response => {
         console.log('Team name updated:', response.data);
       })
@@ -44,7 +44,7 @@ export function TeamCard({ team }: { team: any }) {
     const newMembers = [...teamMembers];
     newMembers[index].name = value;
     setTeamMembers(newMembers);
-    axios.put(`/api/teams/${team.id}/members/${newMembers[index].id}`, { name: value })
+    axios.put(`http://127.0.0.1:5000/api/teams/${team.id}/members/${newMembers[index].id}`, { name: value })
       .then(response => {
         console.log('Team member updated:', response.data);
       })
@@ -58,7 +58,7 @@ export function TeamCard({ team }: { team: any }) {
     newMembers[index].role = value;
     setTeamMembers(newMembers);
     // TODO: Handle on backend so only one team leader can be there at the same time
-    axios.put(`/api/teams/${team.id}/members/${newMembers[index].id}`, { role: value })
+    axios.put(`http://127.0.0.1:5000/api/teams/${team.id}/members/${newMembers[index].id}`, { role: value })
       .then(response => {
         console.log('Team member role updated:', response.data);
       })
@@ -68,7 +68,7 @@ export function TeamCard({ team }: { team: any }) {
   };
 
   const handleAddMember = () => {
-    axios.post(`/api/teams/${team.id}/members`, { name: '', role: 'Unassigned' })
+    axios.post(`http://127.0.0.1:5000/api/teams/${team.id}/members`, { name: '', role: 'Unassigned' })
       .then(response => {
         const newMember = response.data;
         setTeamMembers([...teamMembers, newMember]);
@@ -80,7 +80,7 @@ export function TeamCard({ team }: { team: any }) {
 
   const handleRemoveMember = (index: number) => {
     const memberId = teamMembers[index].id;
-    axios.delete(`/api/teams/${team.id}/members/${memberId}`)
+    axios.delete(`http://127.0.0.1:5000/api/teams/${team.id}/members/${memberId}`)
       .then(response => {
         const newMembers = [...teamMembers];
         newMembers.splice(index, 1);
@@ -92,7 +92,7 @@ export function TeamCard({ team }: { team: any }) {
   };
 
   const handleDeleteTeam = () => {
-    axios.delete(`/api/teams/${team.id}`)
+    axios.delete(`http://127.0.0.1:5000/api/teams/${team.id}/delete`)
       .then(response => {
         console.log('Team deleted:', response.data);
       })
@@ -101,17 +101,19 @@ export function TeamCard({ team }: { team: any }) {
       });
   };
 
-  const sortedTeamMembers = teamMembers.sort((a: Member, b: Member) => {
-    const roleOrder: {[key: string]: number} = {
-      'Team Leader': 0,
-      Pilot: 1,
-      Medic: 2,
-      Security: 3,
-      QRF: 4,
-      Unassigned: 5,
-    };
-    return roleOrder[a.role] - roleOrder[b.role];
-  });
+  const sortedTeamMembers = Array.isArray(teamMembers)
+  ? [...teamMembers].sort((a: Member, b: Member) => {
+      const roleOrder: {[key: string]: number} = {
+        'Team Leader': 0,
+        Pilot: 1,
+        Medic: 2,
+        Security: 3,
+        QRF: 4,
+        Unassigned: 5,
+      };
+      return roleOrder[a.role] - roleOrder[b.role];
+    })
+  : [];
 
   let badgeGradient;
   switch (teamStatus) {
