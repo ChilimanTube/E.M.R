@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import classes from './ReportEmergency.module.css';
-import { TeamCard } from "@/components/TeamCard/TeamCard";
 import { Stepper, Select, Button, TextInput, Text, Slider } from '@mantine/core';
-import {
-    IconMapPin,
-    IconUsers,
-    IconFirstAidKit,
-    IconHelpHexagon,
-    IconSlice,
-    IconHourglassHigh
-} from '@tabler/icons-react';
+import { IconMapPin, IconUsers, IconFirstAidKit, IconHelpHexagon, IconSlice, IconHourglassHigh } from '@tabler/icons-react';
+import { ReportRecap, recapData as initialRecapData } from '../../components/ReportRecap/ReportRecap';
 
 const locations = [
     { group: 'Stanton', items: ['Hurston', 'Crusader', 'MicroTech', 'ArcCorp'] },
@@ -27,6 +20,17 @@ const marks = [
     { value: 120, label: '2 Hours' },
 ];
 
+export const recapData = [
+    { icon: IconMapPin, title: 'Location:', description: 'Hurston', },
+    { icon: IconUsers, title: 'Clients:', description: 'ChilimanTube', },
+    { icon: IconHelpHexagon, title: 'Emergency Type:', description: 'Injured', },
+    { icon: IconFirstAidKit, title: 'Injuries:', description: 'Tier 2', },
+    { icon: IconSlice, title: 'CrimeStat:', description: 'Level 1', },
+    { icon: IconHourglassHigh, title: 'Time Left:', description: '1 Hour', },
+
+];
+
+
 export default function ReportEmergency() {
     const [showForm, setShowForm] = useState(false);
     const [active, setActive] = useState(1);
@@ -42,9 +46,31 @@ export default function ReportEmergency() {
         timeLeft: 90
     });
 
+    const generateRecapData = () => {
+        const updatedRecapData = initialRecapData.map(item => {
+            switch (item.title) {
+                case 'Location:':
+                    return { ...item, description: userSelections.location };
+                case 'Clients:':
+                    return { ...item, description: userSelections.client };
+                case 'Emergency Type:':
+                    return { ...item, description: userSelections.type };
+                case 'Injuries:':
+                    return { ...item, description: userSelections.injury };
+                case 'CrimeStat:':
+                    return { ...item, description: userSelections.crimeStat };
+                case 'Time Left:':
+                    return { ...item, description: `${userSelections.timeLeft} minutes` };
+                default:
+                    return item;
+            }
+        });
+        return updatedRecapData;
+    }
+
 
     const handleStepChange = (nextStep: number) => {
-        const isOutOfBounds = nextStep > 3 || nextStep < 0;
+        const isOutOfBounds = nextStep > 6 || nextStep < 0;
 
         if (isOutOfBounds) {
             return;
@@ -115,9 +141,6 @@ export default function ReportEmergency() {
                                     onChange={(value) => setUserSelections({ ...userSelections, location: value ?? '' })}
                                 />
                                 <div className={classes.buttonContainer}>
-                                    <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
-                                        Previous
-                                    </Button>
                                     <Button onClick={nextStep} color="red" variant="light" className={classes.button}>
                                         Next
                                     </Button>
@@ -252,15 +275,20 @@ export default function ReportEmergency() {
                                 </div>
                             </Stepper.Step>
                             <Stepper.Completed>
-                                <Text size="md" mt="xl" fw={700} className={classes.text}>Report complete. Click submit to initiate rescue.</Text>
-                                <div className={classes.buttonContainer}>
-                                    <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
-                                        Previous
-                                    </Button>
-                                    <Button onClick={() => window.location.href = '/'} color="red" variant="light" className={classes.button}>
-                                        Submit
-                                    </Button>
-                                </div>
+                                {active === 6 && (
+                                    <div>
+                                        <Text size="md" mt="xl" fw={700} className={classes.text}>Report complete. Click submit to initiate rescue.</Text>
+                                        <ReportRecap data={generateRecapData()} />
+                                        <div className={classes.buttonContainer}>
+                                            <Button onClick={prevStep} color="red" variant="light" className={classes.button}>
+                                                Previous
+                                            </Button>
+                                            <Button onClick={() => window.location.href = '/'} color="red" variant="gradient" className={classes.button} gradient={{ from: 'red', to: 'darkRed', deg: 90 }}>
+                                                Submit
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
                             </Stepper.Completed>
                         </Stepper>
                     )}
