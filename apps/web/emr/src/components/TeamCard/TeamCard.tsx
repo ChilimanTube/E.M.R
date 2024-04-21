@@ -1,85 +1,108 @@
 import React, { useState } from 'react';
 import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-react';
-import {
-  Card,
-  Image,
-  Text,
-  ActionIcon,
-  Badge,
-  Group,
-  Center,
-  Avatar,
-  useMantineTheme,
-  rem,
-  List,
-  TextInput,
-  Select,
-} from '@mantine/core';
+import { Card, Image, Text, ActionIcon, Badge, Group, Center, Avatar, useMantineTheme, rem, List, TextInput, Select, } from '@mantine/core';
 import classes from './TeamCard.module.css';
 import { TeamEditModal } from '../TeamModal/TeamModal';
+import axios from 'axios';
 
-export function TeamCard() {
+interface Member {
+  id: number;
+  name: string;
+  role: string;
+}
+
+interface Team {
+  id: number;
+  name: string;
+  members: Member[];
+}
+
+export function TeamCard({ team }: { team: any }) {
   const linkProps = { href: '#' };
   const theme = useMantineTheme();
   const [isEditingTeamName, setIsEditingTeamName] = useState(false);
-  const [teamName, setTeamName] = useState('Team Alpha');
+  const [teamName, setTeamName] = useState(team.name);
   const [teamStatus, setTeamStatus] = useState('Standby');
-  const [teamMembers, setTeamMembers] = useState([
-    { name: 'John', role: 'Team Leader' },
-    { name: 'Jane', role: 'Medic' },
-    { name: 'Alice', role: 'Pilot' },
-  ]);
-
-  const id = '123456';
+  const [teamMembers, setTeamMembers] = useState(team.members);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEditTeamNameClick = () => {
     setIsEditingTeamName(!isEditingTeamName);
   };
-
   const handleTeamNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTeamName(event.target.value);
+    axios.put(`/api/teams/${team.id}`, { name: event.target.value })
+      .then(response => {
+        console.log('Team name updated:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating team name:', error);
+      });
   };
 
   const handleTeamMemberChange = (index: number, value: string) => {
     const newMembers = [...teamMembers];
     newMembers[index].name = value;
     setTeamMembers(newMembers);
+    axios.put(`/api/teams/${team.id}/members/${newMembers[index].id}`, { name: value })
+      .then(response => {
+        console.log('Team member updated:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating team member:', error);
+      });
   };
 
   const handleRoleChange = (index: number, value: string) => {
     const newMembers = [...teamMembers];
-    const currentTeamLeaderIndex = newMembers.findIndex((member) => member.role === 'Team Leader');
-
-    if (value === 'Team Leader') {
-      if (currentTeamLeaderIndex !== -1) {
-        newMembers[currentTeamLeaderIndex].role = 'Unassigned';
-      }
-    }
-
     newMembers[index].role = value;
-
     setTeamMembers(newMembers);
+    // TODO: Handle on backend so only one team leader can be there at the same time
+    axios.put(`/api/teams/${team.id}/members/${newMembers[index].id}`, { role: value })
+      .then(response => {
+        console.log('Team member role updated:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating team member role:', error);
+      });
   };
 
   const handleAddMember = () => {
-    setTeamMembers([...teamMembers, { name: '', role: 'Team Leader' }]);
+    axios.post(`/api/teams/${team.id}/members`, { name: '', role: 'Unassigned' })
+      .then(response => {
+        const newMember = response.data;
+        setTeamMembers([...teamMembers, newMember]);
+      })
+      .catch(error => {
+        console.error('Error adding team member:', error);
+      });
   };
 
   const handleRemoveMember = (index: number) => {
-    const newMembers = [...teamMembers];
-    newMembers.splice(index, 1);
-    setTeamMembers(newMembers);
+    const memberId = teamMembers[index].id;
+    axios.delete(`/api/teams/${team.id}/members/${memberId}`)
+      .then(response => {
+        const newMembers = [...teamMembers];
+        newMembers.splice(index, 1);
+        setTeamMembers(newMembers);
+      })
+      .catch(error => {
+        console.error('Error removing team member:', error);
+      });
   };
 
   const handleDeleteTeam = () => {
-    // Add your logic here to delete the team
-    // You can remove the card from the UI or make an API call to delete the team from the backend
-    console.log('Team deleted');
+    axios.delete(`/api/teams/${team.id}`)
+      .then(response => {
+        console.log('Team deleted:', response.data);
+      })
+      .catch(error => {
+        console.error('Error deleting team:', error);
+      });
   };
 
-  const sortedTeamMembers = teamMembers.sort((a, b) => {
-    const roleOrder: { [key: string]: number } = {
+  const sortedTeamMembers = teamMembers.sort((a: Member, b: Member) => {
+    const roleOrder: {[key: string]: number} = {
       'Team Leader': 0,
       Pilot: 1,
       Medic: 2,
@@ -131,11 +154,11 @@ export function TeamCard() {
       )}
 
       <Text fz="sm" c="dimmed" lineClamp={4}>
-        Team ID: {id}
+      Team ID: {team.id}
       </Text>
 
       <List size="sm">
-        {sortedTeamMembers.map((member, index) => (
+        {sortedTeamMembers.map((member: Member, index: number) => (
           <List.Item key={index}>
             <Group>
               {!isEditingTeamName ? (
