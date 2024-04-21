@@ -43,8 +43,7 @@ class Alerts(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    alert_type = db.Column(db.String(80), unique=False, nullable=False)
-    details = db.Column(db.String(80), unique=False, nullable=False)
+    alert_type = db.Column(db.String(80), unique=False, nullable=False)  # Beacon / Emergency
     datetime = db.Column(db.DateTime, nullable=False)
 
 
@@ -66,3 +65,30 @@ class Responders(db.Model):
 
     def __repr__(self):
         return '<AlertResult %r>' % self.result
+
+
+class Clients(db.Model):
+    __tablename__ = 'clients'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    rsi_handle = db.Column(db.String(80), unique=False, nullable=False)
+
+
+    def __repr__(self):
+        return '<Client %r>' % self.name
+
+class Emergency(db.Model):
+    __tablename__ = 'emergency'
+    id = db.Column(db.Integer, primary_key=True)
+    submitter = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable=False)
+    client_ids = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable=False)
+    location = db.Column(db.String(80), unique=False, nullable=False)
+    datetime = db.Column(db.DateTime, nullable=False)
+    time_until_death = db.Column(db.DateTime, nullable=False)
+    injuries = db.Column(db.String(80), nullable=False)
+    crime_stat = db.Column(db.String(80), nullable=False)
+
+emergency_clients = db.Table('emergency_clients',
+    db.Column('emergency_id', db.Integer, db.ForeignKey('emergency.id'), primary_key=True),
+    db.Column('client_id', db.Integer, db.ForeignKey('clients.id'), primary_key=True)
+)
