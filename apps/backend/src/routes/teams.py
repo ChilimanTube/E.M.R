@@ -64,5 +64,5 @@ def delete_team(team_id):
 
     db.session.delete(team)
     db.session.commit()
-    print('Team deleted', 200)
+    print('Team deleted', team_id, 200)
     return jsonify({'message': 'Team deleted', 'team_id': team.id}), 200

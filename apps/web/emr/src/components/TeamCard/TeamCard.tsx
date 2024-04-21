@@ -4,26 +4,26 @@ import { Card, Image, Text, ActionIcon, Badge, Group, Center, Avatar, useMantine
 import classes from './TeamCard.module.css';
 import { TeamEditModal } from '../TeamModal/TeamModal';
 import axios from 'axios';
+import { Team } from '@/pages/dashboard/teams/index';
 
-interface Member {
+export interface Member {
   id: number;
   name: string;
   role: string;
 }
 
-interface Team {
-  id: number;
-  name: string;
-  members: Member[];
+interface TeamCardProps {
+  team: Team;
+  onDelete: () => void;
 }
 
-export function TeamCard({ team }: { team: any }) {
+export function TeamCard({ team, onDelete }: TeamCardProps) {
   const linkProps = { href: '#' };
   const theme = useMantineTheme();
   const [isEditingTeamName, setIsEditingTeamName] = useState(false);
   const [teamName, setTeamName] = useState(team.name);
   const [teamStatus, setTeamStatus] = useState('Standby');
-  const [teamMembers, setTeamMembers] = useState(team.members);
+  const [teamMembers, setTeamMembers] = useState<Member[]>(team.members || []);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEditTeamNameClick = () => {
@@ -95,6 +95,7 @@ export function TeamCard({ team }: { team: any }) {
     axios.delete(`http://127.0.0.1:5000/api/teams/${team.id}/delete`)
       .then(response => {
         console.log('Team deleted:', response.data);
+        onDelete();
       })
       .catch(error => {
         console.error('Error deleting team:', error);

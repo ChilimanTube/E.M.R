@@ -1,14 +1,17 @@
 import classes from './Teams.module.css';
 import Layout from "@/layout/dashboard-layout";
-import { TeamCard } from '@/components/TeamCard/TeamCard';
+import { TeamCard, Member } from '@/components/TeamCard/TeamCard';
 import { DndBoard } from '@/components/DndBoard/DndBoard';
 import { Button, Modal, TextInput } from '@mantine/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-interface Team {
+export interface Team extends Partial<Member> {
     id: number;
     name: string;
+    status: string;
+    members?: Member[];
+    role?: string;
 }
 
 export default function Dispatch() {
@@ -35,11 +38,21 @@ export default function Dispatch() {
         setNewTeamName('');
     };
 
+    const handleDeleteTeam = (teamId: number) => {
+        setTeams(prevTeams => prevTeams.filter(team => team.id !== teamId));
+    };
+
     const handleSubmit = () => {
         axios.post('http://127.0.0.1:5000/api/teams/create', { name: newTeamName, status: 'Standby' })
             .then(response => {
                 const newTeamId = response.data.id;
-                setTeams(prevTeams => [...prevTeams, newTeamId]);
+                if (newTeamId !== undefined) {
+                    const newTeam: Team = { id: newTeamId, name: newTeamName, status: 'Standby' };
+                    setTeams(prevTeams => [...prevTeams, newTeam]);
+                    handleCloseModal();
+                } else {
+                    console.error('Error: New team id is undefined');
+                }
                 handleCloseModal();
             })
             .catch(error => {
@@ -78,7 +91,9 @@ export default function Dispatch() {
                     <div className={classes.cardSpace}>
                         {teams.map(team => {
                             console.log('Team:', team);
-                            return <TeamCard key={team.id} team={team} />;
+                            return team && team.id ? (
+                                <TeamCard key={team.id} team={team} onDelete={() => handleDeleteTeam(team.id)} />
+                            ) : null;
                         })}
                     </div>
                 </div>
