@@ -83,8 +83,8 @@ export default function ReportEmergency() {
         }
         axios.post('http://127.0.0.1:5000/api/emergency',{ location: userSelections.location, clients: userSelections.clients, type: userSelections.type,
             injury: userSelections.injury, crimeStat: userSelections.crimeStat, timeLeft: userSelections.timeLeft
-        }).then(response => { console.log('Emergency reported:', response.data);
-        }).catch(error => { console.error('Emergency report error:', error.response.data); });
+        }).then(response => { console.log('Emergency reported:', response.data); window.location.href = '/';
+        }).catch(error => { console.error('Emergency report error:', error.response?.data || error.message); });
     }
 
     const shouldAllowSelectStep = (step: number) => highestStepVisited >= step && active !== step;
