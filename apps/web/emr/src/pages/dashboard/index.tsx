@@ -73,21 +73,56 @@ export default function Dashboard() {
     axios.get('http://127.0.0.1:5000/api/statistics/teams')
       .then(response => {
         const allTeams = response.data.all_teams;
-        const standbyTeams = response.data.standby_teams;
-        const deployedTeams = response.data.deployed_teams;
-
+        console.log('All teams:', allTeams);
+  
         const updatedStats = [
           { title: 'Online Teams', icon: 'team', value: allTeams.toString() },
-          { title: 'Standby Teams', icon: 'ready', value: standbyTeams.toString() },
-          { title: 'Dispatched Teams', icon: 'medic', value: deployedTeams.toString() },
-          { title: 'Alerts today', icon: 'alert', value: '12' },
         ];
         setStats(updatedStats);
       })
       .catch(error => {
         console.error('Error fetching team statistics:', error);
       });
-
+  
+    axios.get('http://127.0.0.1:5000/api/statistics/teams/standby')
+      .then(response => {
+        const standbyTeams = response.data.standby_teams;
+        console.log('Standby teams:', standbyTeams);
+        setStats(prevStats => [
+          ...prevStats,
+          { title: 'Standby Teams', icon: 'ready', value: standbyTeams.toString() }
+        ]);
+      })
+      .catch(error => {
+        console.error('Error fetching team statistics:', error);
+      });
+  
+    axios.get('http://127.0.0.1:5000/api/statistics/teams/deployed')
+      .then(response => {
+        const deployedTeams = response.data.deployed_teams;
+        console.log('Deployed teams:', deployedTeams);
+        setStats(prevStats => [
+          ...prevStats,
+          { title: 'Deployed Teams', icon: 'medic', value: deployedTeams.toString() }
+        ]);
+      })
+      .catch(error => {
+        console.error('Error fetching team statistics:', error);
+      });
+  
+    axios.get('http://127.0.0.1:5000/api/statistics/alerts')
+      .then(response => {
+        const alerts = response.data.alerts;
+        console.log('Alerts:', alerts);
+        setStats(prevStats => [
+          ...prevStats,
+          { title: 'Alerts today', icon: 'alert', value: alerts.toString() }
+        ]);
+      })
+      .catch(error => {
+        console.error('Error fetching team statistics:', error);
+      });
+  
     axios.get('http://127.0.0.1:5000/api/teams')
       .then(response => {
         setTeams(response.data);
