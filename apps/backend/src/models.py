@@ -82,7 +82,7 @@ class Responders(db.Model):
     __tablename__ = 'responders'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
+    role = db.Column(db.String(80), unique=False, nullable=True)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=True)
 
     def __repr__(self):
@@ -92,7 +92,7 @@ class Responders(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'role_id': self.role_id,
+            'role': self.role,
             'team_id': self.team_id
         }
 

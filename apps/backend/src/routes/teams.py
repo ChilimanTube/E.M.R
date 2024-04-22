@@ -68,16 +68,14 @@ def delete_team(team_id):
     return jsonify({'message': 'Team deleted', 'team_id': team.id}), 200
 
 
-@teams_bp.route('/api/teams/<int:team_id>/members/add/<int:responder_id>', methods=['PUT'])
-def add_member(team_id, responder_id):
+@teams_bp.route('/api/teams/<int:team_id>/members/add', methods=['POST'])
+def add_member(team_id):
     team = Teams.query.get(team_id)
     if not team:
         return jsonify({'error': 'Team not found'}), 404
-
-    if not responder_id:
-        return jsonify({'error': 'Member ID is required'}), 400
-
-    team.members.append(responder_id)
+    data = request.json
+    responder = Responders(name=data.get('name'), role=data.get('role'), team_id=team_id)
+    db.session.add(responder)
     db.session.commit()
     print('Member added to team', 200)
     return jsonify({'message': 'Member added to team', 'team_id': team.id}), 200

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Modal, Text, TextInput, Select, Button, Group } from '@mantine/core';
 
 export function TeamEditModal({ isOpen, onClose, teamName, onTeamNameChange, teamMembers, onTeamMemberChange, onRoleChange, onAddMember, onRemoveMember }: {
@@ -9,9 +9,17 @@ export function TeamEditModal({ isOpen, onClose, teamName, onTeamNameChange, tea
   teamMembers: { name: string; role: string }[];
   onTeamMemberChange: (index: number, value: string) => void;
   onRoleChange: (index: number, value: string) => void;
-  onAddMember: () => void;
+  onAddMember: (name: string, role: string) => void;
   onRemoveMember: (index: number) => void;
 }) {
+  const [newMemberName, setNewMemberName] = useState('');
+  const [newMemberRole, setNewMemberRole] = useState('Unassigned');
+
+  const handleAddMember = () => {
+    onAddMember(newMemberName, newMemberRole);
+    setNewMemberName('');
+    setNewMemberRole('Unassigned');
+  };
   return (
     <Modal
       title="Edit Team Details"
@@ -41,15 +49,17 @@ export function TeamEditModal({ isOpen, onClose, teamName, onTeamNameChange, tea
 
       {isOpen && (
         <Group>
-          <TextInput placeholder="Member Name" />
+          <TextInput placeholder="Member Name" value={newMemberName} onChange={(event) => setNewMemberName(event.target.value)}/>
           <Select
             placeholder="Select Role"
+            value={newMemberRole}
+            onChange={(value) => setNewMemberRole(value as string)}
             data={['Team Leader', 'Pilot', 'Medic', 'Security', 'QRF', 'Unassigned']}
           />
         </Group>
       )}
       <br />
-      <Button onClick={onAddMember}>Add Member</Button>
+      <Button onClick={() => onAddMember(newMemberName, newMemberRole)}>Add Member</Button>
     </Modal>
   );
 }

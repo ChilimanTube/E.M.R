@@ -70,8 +70,18 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
       });
   };
 
-  const handleAddMember = () => {
-    axios.post(`http://127.0.0.1:5000/api/teams/${team.id}/members/add`, { name: newMemberName, role: newMemberRole })
+  const handleAddMember = (name: string, role: string) => {
+    axios.post(`http://127.0.0.1:5000/api/teams/${team.id}/members/add`, { name, role })
+      .then(response => {
+        console.log('Member added to team:', response.data);
+        const newMembers = [...teamMembers, { id: response.data.responder_id, name, role }];
+        setTeamMembers(newMembers);
+        setNewMemberName('');
+        setNewMemberRole('Unassigned');
+      })
+      .catch(error => {
+        console.error('Error adding team member:', error);
+      });
   };
 
   const handleRemoveMember = (index: number) => {
@@ -205,7 +215,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
             <IconPencil style={{ width: rem(16), height: rem(16) }} color={theme.colors.blue[7]} />
           </ActionIcon>
           {isEditingTeamName && (
-            <ActionIcon className={classes.action} onClick={handleAddMember}>
+            <ActionIcon className={classes.action} onClick={() => console.log("Added")}>
               <IconPlus style={{ width: rem(16), height: rem(16) }} color={theme.colors.green[6]} />
             </ActionIcon>
           )}
