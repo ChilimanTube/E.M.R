@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Card, Image, Text, Group, Badge, Center, Button } from '@mantine/core';
 import classes from './EmergencyCard.module.css';
 import {
@@ -8,31 +8,59 @@ import {
     IconActivity,
     IconUsers
 } from '@tabler/icons-react';
-import { Emergency } from '@/pages/dashboard/emergencies/index';
+import { Emergency, Alert } from '@/pages/dashboard/emergencies/index';
 import axios from "axios";
 
-const alertmockdata = [
-    { name: 'Alert 1', status: 'Incoming', location: 'Hourston', time: '1 Hour 21 minutes left', injury: 'Tier 2 Injury', clients: '2 Clients' },
-    { name: 'Alert 2', status: 'Incoming', location: 'Yela', time: '1 hour left', injury: 'Tier 1 Injury', clients: '1 Client' },
-    { name: 'Alert 3', status: 'Incoming', location: 'Daymar', time: '2 hours left', injury: 'Tier 3 Injury', clients: '3 Clients' },
-    { name: 'Alert 4', status: 'Incoming', location: 'Delamar', time: '2 hours left', injury: 'Tier 2 Injury', clients: '2 Clients' },
-];
-
-const mockdata = [
-    { label: '2 Clients', icon: IconUsers },
-    { label: '1 Hour 21 minutes left', icon: IconClockHour4 },
-    { label: 'Tier 2 Injury', icon: IconActivity },
-    { label: 'Hourston', icon: IconPlanet },
-];
 
 interface EmergencyCardProps {
     emergency: Emergency;
+    alert?: Alert
     onDeploy: () => void;
+    onDelete: () => void;
 }
 
 
 export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProps) {
-    const details = mockdata.map((detail) => (
+    const timeOfDeath = new Date(emergency.time_of_death);
+    const timeRemaining = timeOfDeath.getTime() - Date.now();
+    
+    const formatTimeRemaining = (milliseconds: number) => {
+        const seconds = Math.floor(milliseconds / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        return `${hours}h ${minutes % 60}m`;
+    };
+    
+    let timeRemainingDisplay;
+    if (timeRemaining >= 0) {
+        timeRemainingDisplay = formatTimeRemaining(timeRemaining);
+    } else {
+        timeRemainingDisplay = 'Expired';
+    }
+    
+    axios.get(`http://127.0.0.1:5000/api/emergency/${emergency.id}/alert`)
+        .then(response => {
+            const responseData: Alert[] = response.data;
+            const alert = responseData[0];
+            console.log('Alert:', response.data);
+            console.log('Alert type:', response.data[0].id);
+            console.log('Alert name:', response.data[0].name);
+            
+        })
+        .catch(error => {
+            console.error('Error fetching alert:', error);
+        });
+
+
+    const detailData = [
+        { label: emergency.submitter, icon: IconUsers },
+        { label: timeRemainingDisplay, icon: IconClockHour4 },
+        { label: emergency.injuries, icon: IconActivity },
+        { label: emergency.location, icon: IconPlanet },
+        { label: emergency.type, icon: IconMedicalCross },
+    ];
+
+    const details = detailData.map((detail) => (
         <Center key={detail.label}>
             <detail.icon size="1.05rem" className={classes.icon} stroke={1.5} />
             <Text size="xs">{detail.label}</Text>
@@ -40,9 +68,8 @@ export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProp
     ));
 
     const handleDeploy = () => {
-        axios.put('http://127.0.0.1:5000/api/emergency/${emergency.id}/update', {
+        axios.put(`http://127.0.0.1:5000/api/emergency/${emergency.id}/update`, {
              id: emergency.id,
-             name: emergency.name,
              status: 'Ongoing'
              })
             .then(response => {
@@ -53,6 +80,8 @@ export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProp
                 console.error('Error deploying team:', error);
             });
     }
+
+    const alertName = alert.name;
     return (
         <Card withBorder radius="md" className={classes.card}>
             <Card.Section className={classes.imageSection}>
@@ -61,12 +90,12 @@ export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProp
 
             <Group justify="space-between" mt="md">
                 <div>
-                    <Text fw={500}>Alert Furious Planet</Text>
+                    <Text fw={500}>{alertName}</Text>
                     <Text fz="xs" c="dimmed">
-                        Emergency ID: 123456
+                        Emergency ID: {emergency.id}
                     </Text>
                 </div>
-                <Badge variant="outline">INCOMING</Badge>
+                <Badge variant="outline">{emergency.status}</Badge>
             </Group>
 
             <Card.Section className={classes.section} mt="md">
