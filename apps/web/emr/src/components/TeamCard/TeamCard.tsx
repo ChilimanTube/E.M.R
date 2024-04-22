@@ -11,7 +11,6 @@ export interface Member {
   name: string;
   role: string;
 }
-
 interface TeamCardProps {
   team: Team;
   onDelete: () => void;
@@ -39,6 +38,9 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
       });
   }, []);
 
+  useEffect(() => {
+    setTeamStatus(team.status);
+  }, [team.status]);
 
   const handleEditTeamNameClick = () => {
     setIsEditingTeamName(!isEditingTeamName);
@@ -135,7 +137,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
     })
     : [];
 
-  
+
   let badgeGradient;
   switch (teamStatus) {
     case 'Standby':

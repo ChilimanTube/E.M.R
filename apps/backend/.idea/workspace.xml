@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b1db332d-5ec7-49e6-87ef-10e913aa53e3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/teams.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/teams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/statistics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/components/DndCard/DndCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/components/DndCard/DndCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/components/TeamCard/TeamCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/components/TeamCard/TeamCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

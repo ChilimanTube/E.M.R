@@ -16,7 +16,7 @@ def get_all_teams():
     return jsonify({'all_teams': len(teams)}), 200
 
 
-@statistics_bp.route('/api/statistics/teams/onalert', methods=['GET'])
+@statistics_bp.route('/api/statistics/teams/deployed', methods=['GET'])
 def get_teams_on_alert():
-    teams = Teams.query.filter_by(status='On Alert').all()
-    return jsonify({'on_alert_teams': len(teams)}), 200
+    teams = Teams.query.filter_by(status='Deployed').all()
+    return jsonify({'deployed_teams': len(teams)}), 200
