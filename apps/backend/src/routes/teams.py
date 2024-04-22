@@ -127,3 +127,22 @@ def update_member(team_id, responder_id):
     db.session.commit()
     print('Responder updated', 200)
     return jsonify({'message': 'Responder updated', 'team_id': team_id, 'responder_id': responder_id}), 200
+
+
+@teams_bp.route('/api/teams/deploy', methods=['POST'])
+def deploy_team():
+    data = request.json
+    team_id = data.get('team_id')
+    status = "Deployed"
+
+    if not team_id:
+        return jsonify({'error': 'Team ID are required'}), 400
+
+    team = Teams.query.get(team_id)
+    if not team:
+        return jsonify({'error': 'Team not found'}), 404
+
+    team.status = status
+    db.session.commit()
+    print('Team deployed', 200)
+    return jsonify({'message': 'Team deployed', 'team_id': team_id}), 200

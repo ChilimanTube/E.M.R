@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { Card, Image, Text, Group, Badge, Center, Button } from '@mantine/core';
 import classes from './EmergencyCard.module.css';
+import AlertModal from "../AlertModal/AlertModal";
 import {
     IconMedicalCross,
     IconPlanet,
@@ -21,6 +22,7 @@ interface EmergencyCardProps {
 
 
 export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProps) {
+    const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
     const timeOfDeath = new Date(emergency.time_of_death);
     const timeRemaining = timeOfDeath.getTime() - Date.now();
     
@@ -68,17 +70,8 @@ export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProp
     ));
 
     const handleDeploy = () => {
-        axios.put(`http://127.0.0.1:5000/api/emergency/${emergency.id}/update`, {
-             id: emergency.id,
-             status: 'Ongoing'
-             })
-            .then(response => {
-                console.log('Response from server:', response.data);
-                onDeploy();
-            })
-            .catch(error => {
-                console.error('Error deploying team:', error);
-            });
+        onDeploy();
+        setIsAlertModalOpen(true);
     }
 
     const alertName = alert.name;
@@ -115,6 +108,11 @@ export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProp
                     </Button>
                 </Group>
             </Card.Section>
+            <AlertModal
+                isOpen={isAlertModalOpen}
+                onClose={() => setIsAlertModalOpen(false)}
+                onSumbit={() => setIsAlertModalOpen(false)}
+            />
         </Card>
     );
 }
