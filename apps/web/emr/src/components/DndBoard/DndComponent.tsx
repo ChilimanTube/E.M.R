@@ -29,10 +29,7 @@ const Board: React.FC = () => {
   return (
     <div className="flex h-full w-full gap-3 overflow-scroll p-12">
       {columns.map((column) => (
-        <Column
-          key={column.title}
-          title={column.title}
-          headingColor={column.headingColor}
+        <Column key={column.title} title={column.title} headingColor={column.headingColor}
           cards={cards}
           setCards={setCards}
           column={column.column}
@@ -188,12 +185,7 @@ const AddCard: React.FC<{ column: string; setCards: React.Dispatch<React.SetStat
 
     if (!text.trim().length) return;
 
-    const newCard: Card = {
-      column,
-      title: text.trim(),
-      id: Math.random().toString(),
-    };
-
+    const newCard: Card = { column, title: text.trim(), id: Math.random().toString(), };
     setCards((prevCards) => [...prevCards, newCard]);
     setText("");
     setAdding(false);
