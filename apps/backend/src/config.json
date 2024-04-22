@@ -1,0 +1,4 @@
+{
+  "jwtSecret": "jwt-emergency-management-and-response-system",
+  "postgresURI": "postgresql://postgres:postgres@localhost:5433/emr"
+}

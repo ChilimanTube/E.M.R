@@ -8,7 +8,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/teams.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/teams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/8bacdb39f964_initial_laptop_migration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/emergency.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/emergency.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/components/DndBoard/Kanban.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/dispatch/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/dispatch/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/emergencies/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/emergencies/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/teams/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/teams/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/register/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/register/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/report-emergency/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/report-emergency/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +31,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2fJKmBIlnXEcaUfOzx2W5yiJ4xC" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,9 +41,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Flask server.Flask (app.py).executor": "Run",
+    "Python.emergency.executor": "Run",
     "Python.models.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Rebasing main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -64,6 +78,8 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/backend$models.coverage" NAME="models Coverage Results" MODIFIED="1713737042115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/backend$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1713737048771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/backend$emergency.coverage" NAME="emergency Coverage Results" MODIFIED="1713777115098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/routes" />
+    <SUITE FILE_PATH="coverage/backend$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1713777642543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/backend$backend.coverage" NAME="backend Coverage Results" MODIFIED="1713772661408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

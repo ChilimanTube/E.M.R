@@ -53,6 +53,7 @@ class Alerts(db.Model):
     alert_type = db.Column(db.String(80), unique=False, nullable=False)  # Beacon / Emergency
     datetime = db.Column(db.DateTime, nullable=False)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=False)
+    emergency_id = db.Column(db.Integer, db.ForeignKey('emergency.id'), nullable=True)
 
 
 class AlertResult(db.Model):
@@ -86,6 +87,19 @@ class Emergency(db.Model):
     time_of_death = db.Column(db.DateTime, nullable=True)
     injuries = db.Column(db.String(80), nullable=True)
     crime_stat = db.Column(db.String(80), nullable=True)
+    status = db.Column(db.String(80), nullable=True)
 
     def __repr__(self):
         return '<Emergency %r>' % self.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'submitter': self.submitter,
+            'client_ids': self.client_ids.split(','),
+            'location': self.location,
+            'datetime': self.datetime.isoformat(),
+            'time_of_death': self.time_of_death.isoformat(),
+            'injuries': self.injuries,
+            'crime_stat': self.crime_stat
+        }

@@ -1,6 +1,6 @@
 import { DndCard } from '@/components/DndCard/DndCard';
 import { DndBoard } from '@/components/DndBoard/DndBoard';
-import  Kanban  from '@/components/DndBoard/Kanban';
+import  Kanban  from '@/components/DndBoard/DndComponent';
 import classes from './Dispatch.module.css';
 import Layout from "@/layout/dashboard-layout";
 

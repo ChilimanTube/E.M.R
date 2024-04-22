@@ -66,7 +66,7 @@ interface Props {
   setCards: React.Dispatch<React.SetStateAction<Card[]>>;
 }
 
-const Kanban: React.FC = () => {
+const DndComponent: React.FC = () => {
   return (
     <div className="h-screen w-full bg-neutral-900 text-neutral-50">
       <Board />
@@ -156,11 +156,7 @@ const DropIndicator: React.FC<{ beforeId: string | null; column: string }> = ({
   column,
 }) => {
   return (
-    <div
-      data-before={beforeId || "-1"}
-      data-column={column}
-      className="my-0.5 h-0.5 w-full bg-violet-400 opacity-0"
-    />
+    <div data-before={beforeId || "-1"} data-column={column} className="my-0.5 h-0.5 w-full bg-violet-400 opacity-0" />
   );
 };
 
@@ -229,7 +225,7 @@ const AddCard: React.FC<{ column: string; setCards: React.Dispatch<React.SetStat
             value={text}
             onChange={(e) => setText(e.target.value)}
             autoFocus
-            placeholder="Add new task..."
+            placeholder="Add new team"
             className="w-full rounded border border-violet-400 bg-violet-400/20 p-3 text-sm text-neutral-50 placeholder-violet-300 focus:outline-0"
           />
           <div className="mt-1.5 flex items-center justify-end gap-1.5">
@@ -254,7 +250,7 @@ const AddCard: React.FC<{ column: string; setCards: React.Dispatch<React.SetStat
           onClick={() => setAdding(true)}
           className="flex w-full items-center gap-1.5 px-3 py-1.5 text-xs text-neutral-400 transition-colors hover:text-neutral-50"
         >
-          <span>Add card</span>
+          <span>Add team</span>
           <FiPlus />
         </motion.button>
       )}
@@ -263,30 +259,14 @@ const AddCard: React.FC<{ column: string; setCards: React.Dispatch<React.SetStat
 };
 
 const DEFAULT_CARDS: Card[] = [
-  { title: "Look into render bug in dashboard", id: "1", column: "backlog" },
+  { title: "Team Alpha", id: "1", column: "standby" },
 ];
 
 const columns = [
-  {
-    title: "Backlog",
-    headingColor: "text-neutral-500",
-    column: "backlog",
-  },
-  {
-    title: "TODO",
-    headingColor: "text-yellow-200",
-    column: "todo",
-  },
-  {
-    title: "In progress",
-    headingColor: "text-blue-200",
-    column: "doing",
-  },
-  {
-    title: "Complete",
-    headingColor: "text-emerald-200",
-    column: "done",
-  },
+  { title: "Stanby Teams", headingColor: "text-neutral-500", column: "standby"},
+  { title: "On Alert", headingColor: "text-yellow-200", column: "deployed"},
+  { title: "Returning to base", headingColor: "text-blue-200", column: "rtb"},
+  { title: "Mustering Teams", headingColor: "text-emerald-200", column: "mustering"},
 ];
 
-export default Kanban;
+export default DndComponent;

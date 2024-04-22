@@ -25,6 +25,10 @@ function ConfimRegistrationModal({ isOpen, onClose }: { isOpen: boolean, onClose
             transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}
             centered
             shadow="xxl"
+            overlayProps={{
+                backgroundOpacity: 0.55,
+                blur: 3,
+            }}
         >
             <Text>
                 Your registration is completed. Please login to access the E.M.R system

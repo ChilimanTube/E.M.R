@@ -79,12 +79,18 @@ export default function Dispatch() {
                         opened={isModalOpen}
                         onClose={handleCloseModal}
                         size="xs"
+                        overlayProps={{
+                            backgroundOpacity: 0.55,
+                            blur: 3,
+                        }}
+                        centered
                     >
                         <TextInput
                             value={newTeamName}
                             onChange={(event) => setNewTeamName(event.target.value)}
                             placeholder="Enter team name"
                         />
+                        <br />
                         <Button onClick={handleSubmit}>Create</Button>
                     </Modal>
                 </div>
