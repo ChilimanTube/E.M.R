@@ -67,8 +67,10 @@ def update_emergency(emergency_id):
     injury = data.get('injury')
     crime_stat = data.get('crimeStat')
     time_of_death = data.get('timeLeft')
+    status = data.get('status')
 
-    if not clients or not location or not emergency_type or not injury or not crime_stat or not time_of_death:
+    if (not clients or not location or not emergency_type
+            or not injury or not crime_stat or not time_of_death or not status):
         return jsonify({'error': 'All fields are required'}), 400
 
     submitter = clients[0]
@@ -84,7 +86,9 @@ def update_emergency(emergency_id):
     emergency.time_of_death = time_of_death
     emergency.injuries = injury
     emergency.crime_stat = crime_stat
+    emergency.status = status
 
     db.session.commit()
     print('Emergency updated', 200)
     return jsonify({'message': 'Emergency updated', 'emergency_id': emergency.id}), 200
+

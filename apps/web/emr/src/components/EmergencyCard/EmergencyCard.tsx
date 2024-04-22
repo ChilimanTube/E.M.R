@@ -9,6 +9,7 @@ import {
     IconUsers
 } from '@tabler/icons-react';
 import { Emergency } from '@/pages/dashboard/emergencies/index';
+import axios from "axios";
 
 const alertmockdata = [
     { name: 'Alert 1', status: 'Incoming', location: 'Hourston', time: '1 Hour 21 minutes left', injury: 'Tier 2 Injury', clients: '2 Clients' },
@@ -26,16 +27,32 @@ const mockdata = [
 
 interface EmergencyCardProps {
     emergency: Emergency;
-    onDelete: () => void;
+    onDeploy: () => void;
 }
 
-export default function EmergencyCard({ emergency, onDelete}: EmergencyCardProps) {
+
+export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProps) {
     const details = mockdata.map((detail) => (
         <Center key={detail.label}>
             <detail.icon size="1.05rem" className={classes.icon} stroke={1.5} />
             <Text size="xs">{detail.label}</Text>
         </Center>
     ));
+
+    const handleDeploy = () => {
+        axios.put('http://127.0.0.1:5000/api/emergency/${emergency.id}/update', {
+             id: emergency.id,
+             name: emergency.name,
+             status: 'Ongoing'
+             })
+            .then(response => {
+                console.log('Response from server:', response.data);
+                onDeploy();
+            })
+            .catch(error => {
+                console.error('Error deploying team:', error);
+            });
+    }
     return (
         <Card withBorder radius="md" className={classes.card}>
             <Card.Section className={classes.imageSection}>
@@ -64,7 +81,7 @@ export default function EmergencyCard({ emergency, onDelete}: EmergencyCardProps
 
             <Card.Section className={classes.section}>
                 <Group gap={30}>
-                    <Button radius="xl" style={{ flex: 1 }}>
+                    <Button radius="xl" style={{ flex: 1 }} onClick={handleDeploy}>
                         Deploy Team
                     </Button>
                 </Group>

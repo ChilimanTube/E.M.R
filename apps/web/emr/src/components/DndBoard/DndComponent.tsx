@@ -1,7 +1,6 @@
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { DropResult } from "react-beautiful-dnd";
 import { FiPlus, FiTrash } from "react-icons/fi"
 import { FaFire } from "react-icons/fa";;
 
@@ -12,9 +11,7 @@ const Board: React.FC = () => {
   const handleDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
-    if (!destination) {
-      return;
-    }
+    if (!destination) { return; }
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -74,16 +71,7 @@ const DndComponent: React.FC = () => {
   );
 };
 
-
-
-const Column: React.FC<ColumnProps> = ({
-  title,
-  headingColor,
-  cards,
-  setCards,
-  column,
-  onDragEnd,
-}) => {
+const Column: React.FC<ColumnProps> = ({ title, headingColor, cards, setCards, column, onDragEnd, }) => {
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, card: Card) => {
     e.dataTransfer.setData("cardId", card.id);
   };
@@ -135,14 +123,11 @@ const Card: React.FC<Card & Props> = ({ title, id, column, setCards }) => {
   };
 
   return (
-    <motion.div
-      layout
-      layoutId={id}
+    <motion.div layout layoutId={id}
       className="cursor-grab rounded border border-neutral-700 bg-neutral-800 p-3 active:cursor-grabbing"
     >
       <p className="text-sm text-neutral-100">{title}</p>
-      <button
-        onClick={handleDelete}
+      <button onClick={handleDelete}
         className="absolute top-2 right-2 text-sm text-neutral-400 hover:text-red-500 focus:outline-none"
       >
         <FiTrash />
@@ -180,10 +165,7 @@ const BurnBarrel: React.FC<Props> = ({ setCards }) => {
   };
 
   return (
-    <div
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
+    <div onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}
       className={`mt-10 grid h-56 w-56 shrink-0 place-content-center rounded border text-3xl ${active
           ? "border-red-800 bg-red-800/20 text-red-500"
           : "border-neutral-500 bg-neutral-500/20 text-neutral-500"
@@ -221,10 +203,7 @@ const AddCard: React.FC<{ column: string; setCards: React.Dispatch<React.SetStat
     <>
       {adding ? (
         <motion.form layout onSubmit={handleSubmit}>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            autoFocus
+          <textarea value={text} onChange={(e) => setText(e.target.value)} autoFocus
             placeholder="Add new team"
             className="w-full rounded border border-violet-400 bg-violet-400/20 p-3 text-sm text-neutral-50 placeholder-violet-300 focus:outline-0"
           />
@@ -258,10 +237,7 @@ const AddCard: React.FC<{ column: string; setCards: React.Dispatch<React.SetStat
   );
 };
 
-const DEFAULT_CARDS: Card[] = [
-  { title: "Team Alpha", id: "1", column: "standby" },
-];
-
+const DEFAULT_CARDS: Card[] = [{ title: "Team Alpha", id: "1", column: "standby" }];
 const columns = [
   { title: "Stanby Teams", headingColor: "text-neutral-500", column: "standby"},
   { title: "On Alert", headingColor: "text-yellow-200", column: "deployed"},

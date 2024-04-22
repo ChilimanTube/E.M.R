@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1db332d-5ec7-49e6-87ef-10e913aa53e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/8bacdb39f964_initial_laptop_migration.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/emergency.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/emergency.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/emr/src/components/DndBoard/Kanban.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/dispatch/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/dispatch/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/emergencies/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/emergencies/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/teams/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/dashboard/teams/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/register/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/register/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/emr/src/pages/report-emergency/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/pages/report-emergency/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/emr/src/components/EmergencyCard/EmergencyCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/emr/src/components/EmergencyCard/EmergencyCard.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
