@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-react';
 import { Card, Image, Text, ActionIcon, Badge, Group, Center, Avatar, useMantineTheme, rem, List, TextInput, Select, } from '@mantine/core';
 import classes from './TeamCard.module.css';
@@ -29,6 +29,17 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   const [newMemberName, setNewMemberName] = useState('');
   const [newMemberRole, setNewMemberRole] = useState('Unassigned');
 
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:5000/api/teams/${team.id}/members`)
+      .then(response => {
+        setTeamMembers(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching team members:', error);
+      });
+  }, []);
+
+
   const handleEditTeamNameClick = () => {
     setIsEditingTeamName(!isEditingTeamName);
   };
@@ -42,6 +53,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
         console.error('Error updating team name:', error);
       });
   };
+
 
   const handleTeamMemberChange = (index: number, value: string) => {
     const newMembers = [...teamMembers];
@@ -86,7 +98,8 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
 
   const handleRemoveMember = (index: number) => {
     const memberId = teamMembers[index].id;
-    axios.delete(`http://127.0.0.1:5000/api/teams/${team.id}/members/${memberId}`)
+    const memberName = teamMembers[index].name;
+    axios.delete(`http://127.0.0.1:5000/api/teams/${team.id}/members/remove/${memberName}`)
       .then(response => {
         const newMembers = [...teamMembers];
         newMembers.splice(index, 1);

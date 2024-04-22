@@ -81,7 +81,7 @@ class AlertResult(db.Model):
 class Responders(db.Model):
     __tablename__ = 'responders'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=False, nullable=False)
+    responder_name = db.Column(db.String(80), unique=True, nullable=False)
     role = db.Column(db.String(80), unique=False, nullable=True)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=True)
 

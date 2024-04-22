@@ -74,27 +74,29 @@ def add_member(team_id):
     if not team:
         return jsonify({'error': 'Team not found'}), 404
     data = request.json
-    responder = Responders(name=data.get('name'), role=data.get('role'), team_id=team_id)
+    responder = Responders(responder_name=data.get('name'), role=data.get('role'), team_id=team_id)
     db.session.add(responder)
     db.session.commit()
     print('Member added to team', 200)
     return jsonify({'message': 'Member added to team', 'team_id': team.id}), 200
 
 
-@teams_bp.route('/api/teams/<int:team_id>/members/remove/<int:responder_id>', methods=['PUT'])
-def remove_member(team_id, responder_id):
-    responder = Responders.query.filter_by(team_id=team_id).filter_by(responder_id=responder_id).first()
+@teams_bp.route('/api/teams/<int:team_id>/members/remove/<string:responder_name>', methods=['DELETE'])
+def remove_member(team_id, responder_name):
+    responder = Responders.query.filter_by(team_id=team_id).filter_by(responder_name=responder_name).first()
     if not team_id:
         return jsonify({'error': 'Team not found'}), 404
 
-    if not responder_id:
-        return jsonify({'error': 'Responder ID is required'}), 400
+    if not responder_name:
+        return jsonify({'error': 'Responder Name is required'}), 400
 
-    responder.remove(team_id)
-    db.session.commit()
-    print('Responder removed from team', 200)
-    return jsonify({'message': 'Responder removed from team', 'team_id': team_id}), 200
-
+    if responder:
+        db.session.delete(responder)
+        db.session.commit()
+        print('Responder removed from team', 200)
+        return jsonify({'message': 'Responder removed from team', 'team_id': team_id}), 200
+    else:
+        return jsonify({'error': 'Responder not found'}), 404
 
 @teams_bp.route('/api/teams/<int:team_id>/members', methods=['GET'])
 def get_members(team_id):
@@ -112,14 +114,14 @@ def update_member(team_id, responder_id):
         return jsonify({'error': 'Responder not found'}), 404
 
     data = request.json
-    name = data.get('name')
+    responder_name = data.get('name')
     role_id = data.get('status')
     team_id = data.get('team_id')
 
-    if not name or not role_id or not team_id:
+    if not responder_name or not role_id or not team_id:
         return jsonify({'error': 'Name, team_id and role_id are required'}), 400
 
-    responder.name = name
+    responder.responder_name = responder_name
     responder.status = role_id
     responder.team_id = team_id
     db.session.commit()

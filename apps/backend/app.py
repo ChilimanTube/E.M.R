@@ -19,7 +19,10 @@ postgresURI = data['postgresURI']
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = jwtSecret
 jwt = JWTManager(app)
-cors = CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000",
+                                         "supports_credentials": True,
+                                         "methods": ["GET", "HEAD", "POST", "DELETE", "PUT"],
+                                         "allow_headers": ["Content-Type", "Authorization"]}})
 app.config['SQLALCHEMY_DATABASE_URI'] = postgresURI
 db.init_app(app)
 

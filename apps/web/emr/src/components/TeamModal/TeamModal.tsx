@@ -20,6 +20,8 @@ export function TeamEditModal({ isOpen, onClose, teamName, onTeamNameChange, tea
     setNewMemberName('');
     setNewMemberRole('Unassigned');
   };
+
+  
   return (
     <Modal
       title="Edit Team Details"
