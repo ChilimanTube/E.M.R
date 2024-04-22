@@ -38,6 +38,17 @@ export function TeamEditModal({ isOpen, onClose, teamName, onTeamNameChange, tea
           <Button onClick={() => onRemoveMember(index)} style={{ marginBottom: 20 }}>Remove</Button>
         </Group>
       ))}
+
+      {isOpen && (
+        <Group>
+          <TextInput placeholder="Member Name" />
+          <Select
+            placeholder="Select Role"
+            data={['Team Leader', 'Pilot', 'Medic', 'Security', 'QRF', 'Unassigned']}
+          />
+        </Group>
+      )}
+      <br />
       <Button onClick={onAddMember}>Add Member</Button>
     </Modal>
   );

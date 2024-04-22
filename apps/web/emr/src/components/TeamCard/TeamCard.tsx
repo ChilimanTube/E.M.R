@@ -25,6 +25,9 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   const [teamStatus, setTeamStatus] = useState('Standby');
   const [teamMembers, setTeamMembers] = useState<Member[]>(team.members || []);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddingMember, setIsAddingMember] = useState(false);
+  const [newMemberName, setNewMemberName] = useState('');
+  const [newMemberRole, setNewMemberRole] = useState('Unassigned');
 
   const handleEditTeamNameClick = () => {
     setIsEditingTeamName(!isEditingTeamName);
@@ -68,14 +71,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   };
 
   const handleAddMember = () => {
-    axios.post(`http://127.0.0.1:5000/api/teams/${team.id}/members`, { name: '', role: 'Unassigned' })
-      .then(response => {
-        const newMember = response.data;
-        setTeamMembers([...teamMembers, newMember]);
-      })
-      .catch(error => {
-        console.error('Error adding team member:', error);
-      });
+    axios.post(`http://127.0.0.1:5000/api/teams/${team.id}/members/add`, { name: newMemberName, role: newMemberRole })
   };
 
   const handleRemoveMember = (index: number) => {
@@ -103,8 +99,8 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   };
 
   const sortedTeamMembers = Array.isArray(teamMembers)
-  ? [...teamMembers].sort((a: Member, b: Member) => {
-      const roleOrder: {[key: string]: number} = {
+    ? [...teamMembers].sort((a: Member, b: Member) => {
+      const roleOrder: { [key: string]: number } = {
         'Team Leader': 0,
         Pilot: 1,
         Medic: 2,
@@ -114,7 +110,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
       };
       return roleOrder[a.role] - roleOrder[b.role];
     })
-  : [];
+    : [];
 
   let badgeGradient;
   switch (teamStatus) {
@@ -157,7 +153,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
       )}
 
       <Text fz="sm" c="dimmed" lineClamp={4}>
-      Team ID: {team.id}
+        Team ID: {team.id}
       </Text>
 
       <List size="sm">

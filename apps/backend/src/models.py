@@ -88,6 +88,14 @@ class Responders(db.Model):
     def __repr__(self):
         return '<AlertResult %r>' % self.result
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'role_id': self.role_id,
+            'team_id': self.team_id
+        }
+
 
 class Emergency(db.Model):
     __tablename__ = 'emergency'

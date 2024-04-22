@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from src.models import Teams, db
+from src.models import Teams, db, Responders
 
 teams_bp = Blueprint('teams', __name__)
 
@@ -66,3 +66,64 @@ def delete_team(team_id):
     db.session.commit()
     print('Team deleted', team_id, 200)
     return jsonify({'message': 'Team deleted', 'team_id': team.id}), 200
+
+
+@teams_bp.route('/api/teams/<int:team_id>/members/add/<int:responder_id>', methods=['PUT'])
+def add_member(team_id, responder_id):
+    team = Teams.query.get(team_id)
+    if not team:
+        return jsonify({'error': 'Team not found'}), 404
+
+    if not responder_id:
+        return jsonify({'error': 'Member ID is required'}), 400
+
+    team.members.append(responder_id)
+    db.session.commit()
+    print('Member added to team', 200)
+    return jsonify({'message': 'Member added to team', 'team_id': team.id}), 200
+
+
+@teams_bp.route('/api/teams/<int:team_id>/members/remove/<int:responder_id>', methods=['PUT'])
+def remove_member(team_id, responder_id):
+    responder = Responders.query.filter_by(team_id=team_id).filter_by(responder_id=responder_id).first()
+    if not team_id:
+        return jsonify({'error': 'Team not found'}), 404
+
+    if not responder_id:
+        return jsonify({'error': 'Responder ID is required'}), 400
+
+    responder.remove(team_id)
+    db.session.commit()
+    print('Responder removed from team', 200)
+    return jsonify({'message': 'Responder removed from team', 'team_id': team_id}), 200
+
+
+@teams_bp.route('/api/teams/<int:team_id>/members', methods=['GET'])
+def get_members(team_id):
+    responders = Responders.query.filter_by(team_id=team_id).all()
+    if not responders:
+        return jsonify({'error': 'Team not found'}), 404
+
+    return jsonify([responder.serialize() for responder in responders]), 200
+
+
+@teams_bp.route('/api/teams/<int:team_id>/members/<int:responder_id>', methods=['PUT'])
+def update_member(team_id, responder_id):
+    responder = Responders.query.filter_by(team_id=team_id).filter_by(responder_id=responder_id).first()
+    if not responder:
+        return jsonify({'error': 'Responder not found'}), 404
+
+    data = request.json
+    name = data.get('name')
+    role_id = data.get('status')
+    team_id = data.get('team_id')
+
+    if not name or not role_id or not team_id:
+        return jsonify({'error': 'Name, team_id and role_id are required'}), 400
+
+    responder.name = name
+    responder.status = role_id
+    responder.team_id = team_id
+    db.session.commit()
+    print('Responder updated', 200)
+    return jsonify({'message': 'Responder updated', 'team_id': team_id, 'responder_id': responder_id}), 200
