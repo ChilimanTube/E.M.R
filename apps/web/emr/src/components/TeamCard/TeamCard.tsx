@@ -135,12 +135,13 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
     })
     : [];
 
+  
   let badgeGradient;
   switch (teamStatus) {
     case 'Standby':
       badgeGradient = { from: 'green', to: 'darkGreen' };
       break;
-    case 'On Alert':
+    case 'Deployed':
       badgeGradient = { from: 'yellow', to: 'red' };
       break;
     case 'Returning to base':
@@ -159,7 +160,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
       </Card.Section>
 
       <Badge className={classes.rating} variant="gradient" gradient={badgeGradient}>
-        {teamStatus}
+        {team.status}
       </Badge>
 
       {isEditingTeamName ? (

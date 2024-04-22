@@ -27,7 +27,7 @@ export default function AlertModal({ isOpen, onClose, onSumbit, }:
     }, []);
 
     const handleDeploy = () => {
-        axios.post('http://127.0.0.1:5000/api/teams/deploy', { team_id: selectedTeam })
+        axios.post('http://127.0.0.1:5000/api/teams/deploy', { team_name: selectedTeam })
             .then(response => {
                 console.log('Response from server:', response.data);
                 onSumbit();
@@ -37,6 +37,7 @@ export default function AlertModal({ isOpen, onClose, onSumbit, }:
                 console.error('Error deploying team:', error);
             });
     }
+    
     return (
         <Modal
             title="Deploy Team"

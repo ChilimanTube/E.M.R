@@ -98,6 +98,7 @@ def remove_member(team_id, responder_name):
     else:
         return jsonify({'error': 'Responder not found'}), 404
 
+
 @teams_bp.route('/api/teams/<int:team_id>/members', methods=['GET'])
 def get_members(team_id):
     responders = Responders.query.filter_by(team_id=team_id).all()
@@ -132,17 +133,17 @@ def update_member(team_id, responder_id):
 @teams_bp.route('/api/teams/deploy', methods=['POST'])
 def deploy_team():
     data = request.json
-    team_id = data.get('team_id')
+    team_name = data.get('team_name')
+    team = Teams.query.filter_by(name=team_name).first()
     status = "Deployed"
 
-    if not team_id:
+    if not team_name:
         return jsonify({'error': 'Team ID are required'}), 400
 
-    team = Teams.query.get(team_id)
     if not team:
         return jsonify({'error': 'Team not found'}), 404
 
     team.status = status
     db.session.commit()
     print('Team deployed', 200)
-    return jsonify({'message': 'Team deployed', 'team_id': team_id}), 200
+    return jsonify({'message': 'Team deployed', 'team_name': team_name}), 200
