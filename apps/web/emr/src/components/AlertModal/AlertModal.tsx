@@ -17,7 +17,7 @@ export default function AlertModal({ isOpen, onClose, onSumbit, }:
     const [selectedTeam, setSelectedTeam] = useState('');
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/teams')
+        axios.get('https://api.vkral.xyz/api/teams')
             .then(response => {
                 setTeams(response.data);
             })
@@ -27,7 +27,7 @@ export default function AlertModal({ isOpen, onClose, onSumbit, }:
     }, []);
 
     const handleDeploy = () => {
-        axios.post('http://127.0.0.1:5000/api/teams/deploy', { team_name: selectedTeam })
+        axios.post('https://api.vkral.xyz/api/teams/deploy', { team_name: selectedTeam })
             .then(response => {
                 console.log('Response from server:', response.data);
                 onSumbit();

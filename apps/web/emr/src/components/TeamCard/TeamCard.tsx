@@ -29,7 +29,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   const [newMemberRole, setNewMemberRole] = useState('Unassigned');
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:5000/api/teams/${team.id}/members`)
+    axios.get(`https://api.vkral.xyz/api/teams/${team.id}/members`)
       .then(response => {
         setTeamMembers(response.data);
       })
@@ -47,7 +47,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   };
   const handleTeamNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTeamName(event.target.value);
-    axios.put(`http://127.0.0.1:5000/api/teams/${team.id}`, { name: event.target.value })
+    axios.put(`https://api.vkral.xyz/api/teams/${team.id}`, { name: event.target.value })
       .then(response => {
         console.log('Team name updated:', response.data);
       })
@@ -61,7 +61,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
     const newMembers = [...teamMembers];
     newMembers[index].name = value;
     setTeamMembers(newMembers);
-    axios.put(`http://127.0.0.1:5000/api/teams/${team.id}/members/${newMembers[index].id}`, { name: value })
+    axios.put(`https://api.vkral.xyz/api/teams/${team.id}/members/${newMembers[index].id}`, { name: value })
       .then(response => {
         console.log('Team member updated:', response.data);
       })
@@ -75,7 +75,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
     newMembers[index].role = value;
     setTeamMembers(newMembers);
     // TODO: Handle on backend so only one team leader can be there at the same time
-    axios.put(`http://127.0.0.1:5000/api/teams/${team.id}/members/${newMembers[index].id}`, { role: value })
+    axios.put(`https://api.vkral.xyz/api/teams/${team.id}/members/${newMembers[index].id}`, { role: value })
       .then(response => {
         console.log('Team member role updated:', response.data);
       })
@@ -85,7 +85,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   };
 
   const handleAddMember = (name: string, role: string) => {
-    axios.post(`http://127.0.0.1:5000/api/teams/${team.id}/members/add`, { name, role })
+    axios.post(`https://api.vkral.xyz/api/teams/${team.id}/members/add`, { name, role })
       .then(response => {
         console.log('Member added to team:', response.data);
         const newMembers = [...teamMembers, { id: response.data.responder_id, name, role }];
@@ -101,7 +101,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   const handleRemoveMember = (index: number) => {
     const memberId = teamMembers[index].id;
     const memberName = teamMembers[index].name;
-    axios.delete(`http://127.0.0.1:5000/api/teams/${team.id}/members/remove/${memberName}`)
+    axios.delete(`https://api.vkral.xyz/api/teams/${team.id}/members/remove/${memberName}`)
       .then(response => {
         const newMembers = [...teamMembers];
         newMembers.splice(index, 1);
@@ -113,7 +113,7 @@ export function TeamCard({ team, onDelete }: TeamCardProps) {
   };
 
   const handleDeleteTeam = () => {
-    axios.delete(`http://127.0.0.1:5000/api/teams/${team.id}/delete`)
+    axios.delete(`https://api.vkral.xyz/api/teams/${team.id}/delete`)
       .then(response => {
         console.log('Team deleted:', response.data);
         onDelete();

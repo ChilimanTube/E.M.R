@@ -81,7 +81,7 @@ export default function ReportEmergency() {
             console.error('Please fill in all required fields');
             return;
         }
-        axios.post('http://127.0.0.1:5000/api/emergency/create',{ location: userSelections.location, clients: userSelections.clients, type: userSelections.type,
+        axios.post('https://api.vkral.xyz/api/emergency/create',{ location: userSelections.location, clients: userSelections.clients, type: userSelections.type,
             injury: userSelections.injury, crimeStat: userSelections.crimeStat, timeLeft: userSelections.timeLeft
         }).then(response => { console.log('Emergency reported:', response.data); window.location.href = '/';
         }).catch(error => { console.error('Emergency report error:', error.response?.data || error.message); });

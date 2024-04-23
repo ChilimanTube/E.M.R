@@ -29,7 +29,7 @@ export default function Emergencies() {
     const [emergencies, setEmergencies] = useState<Emergency[]>([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/emergency')
+        axios.get('https://api.vkral.xyz/api/emergency')
             .then(response => {
                 setEmergencies(response.data);
             })

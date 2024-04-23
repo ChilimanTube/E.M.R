@@ -48,7 +48,7 @@ export default function Login() {
             if (token !== null) {
                 
             }
-            axios.post('http://127.0.0.1:5000/api/login', {
+            axios.post('https://api.vkral.xyz/api/login', {
                 email: email,
                 password: password
             }).then(response => {
