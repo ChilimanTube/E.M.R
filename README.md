@@ -1,5 +1,6 @@
 # E.M.R - Emergency Management and Response
 ## Made for [Medrunner](https://medrunner.space)
+Development is still in progress, many features are unavailable.
 ## Development notes
 ### Libraries:
 ![Poster](./imgs/poster.png)
