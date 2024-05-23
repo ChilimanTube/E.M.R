@@ -40,7 +40,7 @@ export default function EmergencyCard({ emergency, onDeploy }: EmergencyCardProp
         timeRemainingDisplay = 'Expired';
     }
     
-    axios.get(`http://127.0.0.1:5000/api/emergency/${emergency.id}/alert`)
+    axios.get(`https://api.vkral.xyz/api/emergency/${emergency.id}/alert`)
         .then(response => {
             const responseData: Alert[] = response.data;
             const alert = responseData[0];

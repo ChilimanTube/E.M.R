@@ -1,8 +1,8 @@
-"""Remove submitter column from Emergency table
+"""empty message
 
-Revision ID: ceb336a199dc
-Revises: af2e787a6bbd
-Create Date: 2024-04-21 18:32:52.870224
+Revision ID: fea0f8103c2a
+Revises: 
+Create Date: 2024-04-23 09:18:07.639305
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ceb336a199dc'
-down_revision = 'af2e787a6bbd'
+revision = 'fea0f8103c2a'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -24,9 +24,11 @@ def upgrade():
     sa.Column('client_ids', sa.String(length=255), nullable=True),
     sa.Column('location', sa.String(length=80), nullable=False),
     sa.Column('datetime', sa.DateTime(), nullable=False),
-    sa.Column('time_until_death', sa.DateTime(), nullable=True),
+    sa.Column('time_of_death', sa.DateTime(), nullable=True),
     sa.Column('injuries', sa.String(length=80), nullable=True),
     sa.Column('crime_stat', sa.String(length=80), nullable=True),
+    sa.Column('status', sa.String(length=80), nullable=True),
+    sa.Column('type', sa.String(length=80), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('roles',
@@ -58,18 +60,20 @@ def upgrade():
     sa.Column('name', sa.String(length=80), nullable=False),
     sa.Column('alert_type', sa.String(length=80), nullable=False),
     sa.Column('datetime', sa.DateTime(), nullable=False),
-    sa.Column('team_id', sa.Integer(), nullable=False),
+    sa.Column('team_id', sa.Integer(), nullable=True),
+    sa.Column('emergency_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['emergency_id'], ['emergency.id'], ),
     sa.ForeignKeyConstraint(['team_id'], ['teams.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('responders',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=80), nullable=False),
-    sa.Column('role_id', sa.Integer(), nullable=True),
+    sa.Column('responder_name', sa.String(length=80), nullable=False),
+    sa.Column('role', sa.String(length=80), nullable=True),
     sa.Column('team_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ),
     sa.ForeignKeyConstraint(['team_id'], ['teams.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('responder_name')
     )
     op.create_table('alert_result',
     sa.Column('id', sa.Integer(), nullable=False),

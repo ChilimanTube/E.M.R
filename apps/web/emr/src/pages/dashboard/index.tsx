@@ -70,7 +70,7 @@ export default function Dashboard() {
   const [stats, setStats] = useState<StatsGridProps['stats']>([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:5000/api/statistics/teams')
+    axios.get('https://api.vkral.xyz/api/statistics/teams')
       .then(response => {
         const allTeams = response.data.all_teams;
         console.log('All teams:', allTeams);
@@ -84,7 +84,7 @@ export default function Dashboard() {
         console.error('Error fetching team statistics:', error);
       });
   
-    axios.get('http://127.0.0.1:5000/api/statistics/teams/standby')
+    axios.get('https://api.vkral.xyz/api/statistics/teams/standby')
       .then(response => {
         const standbyTeams = response.data.standby_teams;
         console.log('Standby teams:', standbyTeams);
@@ -97,7 +97,7 @@ export default function Dashboard() {
         console.error('Error fetching team statistics:', error);
       });
   
-    axios.get('http://127.0.0.1:5000/api/statistics/teams/deployed')
+    axios.get('https://api.vkral.xyz/api/statistics/teams/deployed')
       .then(response => {
         const deployedTeams = response.data.deployed_teams;
         console.log('Deployed teams:', deployedTeams);
@@ -110,7 +110,7 @@ export default function Dashboard() {
         console.error('Error fetching team statistics:', error);
       });
   
-    axios.get('http://127.0.0.1:5000/api/statistics/alerts')
+    axios.get('https://api.vkral.xyz/api/statistics/alerts')
       .then(response => {
         const alerts = response.data.alerts;
         console.log('Alerts:', alerts);
@@ -123,7 +123,7 @@ export default function Dashboard() {
         console.error('Error fetching team statistics:', error);
       });
   
-    axios.get('http://127.0.0.1:5000/api/teams')
+    axios.get('https://api.vkral.xyz/api/teams')
       .then(response => {
         setTeams(response.data);
       })

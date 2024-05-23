@@ -20,7 +20,7 @@ export default function Dispatch() {
     const [teams, setTeams] = useState<Team[]>([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/teams')
+        axios.get('https://api.vkral.xyz/api/teams')
             .then(response => {
                 setTeams(response.data);
             })
@@ -43,7 +43,7 @@ export default function Dispatch() {
     };
 
     const handleSubmit = () => {
-        axios.post('http://127.0.0.1:5000/api/teams/create', { name: newTeamName, status: 'Standby' })
+        axios.post('https://api.vkral.xyz/api/teams/create', { name: newTeamName, status: 'Standby' })
             .then(response => {
                 console.log('Response from server:', response.data);
                 const newTeam = response.data;

@@ -78,7 +78,7 @@ export default function Register() {
         }
         setError("");
 
-        axios.post('http://127.0.0.1:5000/api/register', {
+        axios.post('https://api.vkral.xyz/api/register', {
             firstName: firstName,
             lastName: lastName,
             email: email,
