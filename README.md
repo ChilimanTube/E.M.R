@@ -10,6 +10,7 @@
 - [SQLAlchemy](https://www.sqlalchemy.org/)
 - [Node.js](https://nodejs.org/en/)
 - [PostCSS](https://postcss.org/)
+- [PostgreSQL](https://www.postgresql.org/)
 ### How to run:
 1. Download Docker Desktop
 2. In the `/apps/web/emr/` run the following command:
